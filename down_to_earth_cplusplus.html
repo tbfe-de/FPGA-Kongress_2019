@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Down To Earth C++ For Embedded</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- when changing the stylesheet file please see also remark below -->
+    <link rel="stylesheet" type="text/css" href="styling.css" />
+  </head>
+  <body>
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- :::::::::: template pages come first ... skip to REALCONTENT ::::::::: -->
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<textarea id="source">
+
+layout: true
+name: blank
+styling: styling.css
+styling-by: Martin Weitzel
+
+<!--
+  *****************************************************************************
+  Template used for title page (only)
+  *****************************************************************************
+  Please change the 'styling-by:' attribute if you change the style-sheet.
+-->
+
+.stylehint[
+Styled with [{{styling}}]({{styling}}) by {{styling-by}}
+]
+
+---
+layout: true
+name: plain
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](https://tbfe.de) &#8199;&#8199; 2019-05-22 (11:15 - 12:45)
+customer:  [ELEKTRONIK PRAXIS & PLC2](http://www.fpga-kongress.de/de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages NOT referring to any Info-Graphic
+  *****************************************************************************
+  The following attributes are mandatory FOR THE TEMPLATE PAGE and should
+  simply be left empty if not meaningful.
+
+  copyright: will be reproduced in each page footer first
+  branding: will reproduced in each page footer next
+  customer: will be reproduced in each page footer last
+
+  As the above attributes are part of several page templates a global replace
+  should be used for consistent changes.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+.eta[ETA: {{eta}}]
+
+{{header}}
+
+.pagefooter[
+{{copyright}}: {{branding}} .fpga-logo[{{customer}}]
+]
+
+---
+layout: true
+name: linkinfo
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](https://tbfe.de) &#8199;&#8199; 2019-05-22 (11:15 - 12:45)
+customer:  [ELEKTRONIK PRAXIS & PLC2](http://www.fpga-kongress.de/de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages INTRODUCING to a new Info-Graphic
+  *****************************************************************************
+  On this kind of pages a size-reduced version of the whole info graphic will
+  be reproduced and occupies approximately 2/3 of the page width. So only add
+  little information, preferably links to later pages dealing with single
+  sections of the info graphic.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  graphic: file path to of the infographic EXCLUDING the suffix.
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+.eta[{{eta}}]
+
+{{header}}
+
+.infographic[
+[![Info-Grafik](InfoGraphics/{{graphic}}.png)](InfoGraphics/{{graphic}}.png
+                "Click to open – add [CTRL+] SHIFT for new [tabbed] window")
+]
+
+.pagefooter[
+{{copyright}}: {{branding}} .fpga-logo[{{customer}} ]
+]
+
+---
+layout: true
+name: linkinfoA3
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](https://tbfe.de) &#8199;&#8199; 2019-05-22 (11:15 - 12:45)
+customer:  [ELEKTRONIK PRAXIS & PLC2](http://www.fpga-kongress.de/de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages INTRODUCING to a new Info-Graphic
+  *****************************************************************************
+  On this kind of pages a size-reduced version of the whole info graphic will
+  be reproduced and occupies approximately 2/3 of the page width. So only add
+  little information, preferably links to later pages dealing with single
+  sections of the info graphic.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  graphic: file path to of the infographic EXCLUDING the suffix.
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+.eta[{{eta}}]
+
+{{header}}
+
+.infographicA3[
+[![Info-Grafik](InfoGraphics/{{graphic}}.png)](InfoGraphics/{{graphic}}.png
+                "Click to open – add [CTRL+] SHIFT for new [tabbed] window")
+]
+
+.pagefooter[
+{{copyright}}: {{branding}} .fpga-logo[{{customer}} ]
+]
+
+---
+layout: false
+template: blank
+name: frontmatter
+
+.title[
+	Down To Earth C++ For Embedded
+]
+
+.subtitle[
+	How to benefit from C++ without  
+	"Doing everything completely
+	different, beginning tomorrow".
+]
+.author.pull-left[
+	Durchführung  
+	Dipl.-Ing. Martin Weitzel  
+	Technische Beratung für EDV  
+	https://tbfe.de  
+
+]
+.client.pull-right[
+	FPGA-Kongress 2019, München  
+	2019-05-21 to 2019-05-23  
+	ELEKTRONIK PRAXIS &  
+	PLC2 Schulungscenter
+]
+
+.F[:
+You may use the code examples from this presentation in compliance with the
+[Creative Commons BY-SA License](http://creativecommons.org/licenses/by-sa/2.0/).
+As it has been created using the free HTML4-Tool [Remark](http://remarkjs.com),
+its content is written using the
+[Markdown-Syntax](http://daringfireball.net/projects/markdown/syntax),
+so you may even enhance the purely electronic (non-printed) form with your own
+annotations, only by means of any ordinary text editor. Just hit the P-key while
+viewing this in an Internet browser and follow instructions.
+]
+
+???
+
+(use +/- above to adjust the font size for convenient reading)
+
+Remark allows to add presenter notes to each page. As that feature is **not**
+used by the author of that presentation, it is available for private annotations
+from [this page](#content) on.
+
+Assuming you have downloaded and stored this presentation as HTML-file, proceed
+as follows:
+
+* Open the file in a text editor of your choice.
+
+* Locate the page which you want to annotate.
+
+  * You may do so by just scrolling down (but often it is easier to)
+  * use the text search feature of your editor.
+
+* Locate the separator to the next page (i.e. `---` in a line of its own).
+
+* Before that add another line with three question marks (`???`) only.
+
+Between these to separator lines you can put your annotations and view these
+by using as you just view this page.
+
+**Hint:**
+Indent code examples with four spaces at the beginning of each line and they
+will be displayed with their original line breaks. As an example, below the
+page structure including annotations is shown:
+
+    template: plain
+    name: used_for_internal_links
+    header: ## Shown at the Top of the Page
+
+    Simply scroll down through this document loaded in an editor and you will
+    probably catch the basics of Markdown-Syntax easily, e.g.  how to put in
+    *slight* or **strong** emphasis or [add a link](http://tbfe.de/downloads).
+
+    ???
+    From here follow the [Presenter Notes], i.e. your private annotations
+    ...
+    ...
+
+    [Presenter Notes]: adding-longer-links-that-keeps-text--uncluttered
+
+    ...
+    up to here.
+    ---
+
+To return to the normal view, now press the P-key once more.
+
+<!--
+If you want to put in meta-annotations, i.e. text that is not even shown
+after pressing the P-key, simply use HTML comments, like it is done here.
+-->
+
+---
+template: plain
+class: agenda
+name: content
+header: # Agenda
+eta: 11:20
+
+-------------------------------------------------------------------------------
+* [Three Short Case Studies – Overview		   ](#case_studies_overview)
+
+* [Strong Arithmetic Types – Possible in C++? 	   ](#strong_arithmetic_types)
+
+* [Templates – From the Many To the Few		   ](#two_faces_of_templates)
+
+* [Compile-Time Computing – A Facet of Modern C++  ](#compile_time_computing)
+-------------------------------------------------------------------------------
+
+If you have questions during the talk, feel free to interrupt any time.
+
+.I[
+You can download download the code covered in advance from here:
+https://github.com/tbfe-de/FPGA-Kongress_2019
+]
+
+---
+template: plain
+name: case_studies_overview
+header: ## Three Short Case Studies
+
+There are people telling you:
+
+.N.center[
+If you start with C++, you need to do everything different.  
+Otherwise you'll never exploit the advantages of OOP.._[]
+]
+
+.F[:
+Note that C++ is much more than "just another OOP-Language". Especially its
+template feature – which at the advanced edge leads to Metaprogramming – is
+relatively unique among other language, which at first, cursory glance may look
+similar.
+]
+
+--
+
+.center.large[
+!! NOT HERE !!
+]
+
+--
+
+If you can compile your code with C++ (can you?)
+
+--
+
+* you can very well profit from "small things" …
+
+--
+
+* … slowly grow into a language with so many advantages over C …
+
+--
+
+* … that you soon will fight tooth and nails to keep using it.
+
+---
+template: plain
+header: ### WHAT we will do here
+
+This presentation
+
+* walks you through three little example
+
+--
+
+* meant to show how C++ would improve your C code
+
+--
+
+  * without going "full OOP and
+
+--
+
+  * without having to learn a lot._[]
+
+.F[:
+Well, I lied: how much you have to learn depends on how much you want to
+optimize the resulting code – optimize *beyond* what C allows you to do.
+]
+
+---
+template: plain
+header: ### HOW we will do it
+
+The following Code Walks are
+
+* are partially based on prepared material
+
+* which is then in live-demos modified for improvements._[]
+
+.F[:
+From some feedback of the trainings I teach I know this can help to slow down
+the presentation: typing in code may seem like a waste of time but actually it
+allows the participants understand the big picture before going into the
+specifics (compared to throwing 20 lines of code or so onto the screen, you
+yourself know very well, and immediately start talking about the code in line
+11, 12 and 17 to highlight a particular technique that code is meant to
+communicate).
+]
+
+--
+
+.N.center[
+So you have a chance to step in and control progress AND direction.  
+]
+
+--
+
+.center.large[
+!! USE THAT CHANCE !!
+]
+
+---
+template: plain
+name: strong_arithmetic_types
+header: ## Strong Arithmetic Types
+
+.pull-left[
+Doesn't this fragment look nice?
+
+```
+typedef float Current; // mA
+typedef float Voltage; // V
+typedef float Power;   // W
+…
+Current get_I();
+Current get_U();
+void show_VA(Power);
+…
+const Voltage minVcc = 4.85,
+              maxVcc = 5.2;
+…
+Current c = get_I();
+Voltage v = get_U();
+…
+show_VA(v * c/1e3);
+```
+]
+.pull-right[
+What may be the intent?
+
+* Allow to change the data type at a central place – e.g. from `float` to
+  `double`?
+
+* Protect against easy errors?
+```
+if (get_I() < minVcc) …
+```
+
+* Maybe even with units checking?
+
+```
+show_VA(get_U() % get_I());
+```
+]
+
+---
+template: plain
+header: ### First Live Demo Starts
+
+.center.large[
+SO LET'S SEE
+]
+
+Outline of demo – maybe varied or extended on request:
+
+* `typedef`-types are just aliases – *not strong types*
+* same for type definitions in the new C++ `using` syntax
+* BUT: classes are real types …
+* THOUGH: … lead to a lot of duplicated code
+* SOLUTION: a tiny template trick
+
+--
+
+And beyond:
+
+* How to extend to full unit checking
+* Maybe [Boost.Units] make sense for you?
+
+[Boost.Units]: https://www.boost.org/doc/libs/release/doc/html/boost_units.html
+
+<!-- -->
+
+.I[
+Full code see **`Example_1`** in    
+https://github.com/tbfe-de/FPGA-Kongress_2019
+]
+
+---
+template: plain
+name: two_faces_of_templates
+header: ## The Two Faces of Templates
+
+Assume we have just completed a nice piece of code, implementing a little
+event queue …._[]
+
+```
+class EventQueue {
+	using std::size_t;
+	const size_t Queue = 10+1;
+	Event data[Queued];
+	size_t iput = 0, iget = 0;
+	static size_t wrap(size_t idx) { return idx % Queued; }
+public:
+	bool empty() const;
+	bool full() const;
+	size_t size() const;
+	void put(Event);
+	void get(Event &);
+	Event peek(size_t) const;
+};
+```
+
+.F[:
+Payload `Event` not further detailed (maybe assume an enumeration type).
+]
+
+---
+template: plain
+header: ### Second Live Demo Starts
+
+.center.large[
+Where to go from here?
+]
+
+--
+
+Outline of demo – maybe varied or extended on request:
+
+* Explain the code, especially "full" and "empty" conditions.
+* Explain its current limitations.
+* Generalize the payload via a template type argument.
+* Generalize the maximum queue size via a template numeric argument.
+
+---
+template: plain
+header: #### Intermezzo: Now That Was the Easy Part
+
+Let's see what we've got so and how it changes the usage:
+```
+template<typename PayLoad, std::size_t MaxSize>
+class RingBuffer {
+	using std::size_t;
+	PayLoad data[MaxSize+1];
+	size_t iputa = 0, iget = 0;
+	static size_t wrap(size_t idx) { return idx % (MaxSize+1); }
+public:
+	bool empty() const;
+	bool full() const;
+	size_t size() const;
+	void put(PayLoad);
+	void get(PayLoad &);
+	PayLoad peek(size_t) const;
+};
+```
+
+--
+
+.pull-left[
+Usage once was:
+```
+EventQueue q;
+```
+]
+.pull-right[
+And now it is:
+```
+RingBuffer<Event, 10> q:
+```
+]
+
+---
+template: plain
+header: #### Summarizing So Far
+
+[Generic Programming]: https://en.wikipedia.org/wiki/Generic_programming
+
+.center.large[
+Wasn't that easy-peasy?
+]
+
+--
+
+For most everybody usage is nearly as easy as before!._[]
+
+.N.center[
+That's the tiny little bit what **many** developers need to know when C++
+templates are utilized for what is also called [Generic Programming].
+]
+
+.F[:
+And you can get it even closer with this type alias:
+```
+using EventQueue = RingBuffer<Event, 10>;
+```
+]
+
+--
+
+And turning a type and a compile-time constant into template arguments wasn't
+that difficult either, or was it?
+
+.N.center[
+That's the additional knowledge to be acquired.  
+But only **few** developers need to have it.
+]
+
+--
+
+So why is it C++ templates have the reputation to be hard to master?
+
+---
+template: plain
+header: #### Second Live Demo Continues
+
+[Metaprogramming]: https://en.wikipedia.org/wiki/Generic_programming
+
+C++ templates **may** become a bit or even much more complicated
+
+* once you want or need to optimize based on type properties,
+* what is also called [Metaprogramming].
+
+--
+
+.N.center[
+But that again is knowledge **only some few** need to have!._[]
+]
+
+--
+
+Optional (if there is sufficient interest and time allows):
+
+* Discuss argument handling and optimization chances.
+* Discuss making the queue thread-safe.
+
+<!-- -->
+
+.I[
+Full code see **`Example_2`** in    
+https://github.com/tbfe-de/FPGA-Kongress_2019
+]
+
+.F[:
+Yes! It's a bit of a white lie to get you started. Actually deciphering error
+messages from bad use of templates may need special skills at times. But then
+there comes C++20 with its promise a new feature called [Constraints] will
+improve the current situation substantially.
+]
+
+---
+template: plain
+name: compile_time_computing
+header: ## Computing at Compile Time
+
+C++11 has added `constexpr` to indicate
+
+* a data initialization is to be done at compile time, meaning
+
+  * an expression used as initial value needs no run-time code;
+
+* a function is to be made available also._[] at compile-time, meaning
+
+  * there are certain restrictions on what it is allowed to do.
+
+.F[:
+A run-time version of a `constexpr` function is made available too when there
+are arguments that themselves are not `constexpr` data; of course such a
+function can then *not* be used to initialize `constexpr` data.
+]
+
+--
+
+.N.center[
+Beyond that semantics are straight forward and exactly like expected.
+]
+
+--
+
+You may
+
+* call `constexpr` functions in expression initializing `constexpr` data;
+* use `constexpr` data as argument for `constexpr` function calls.
+
+---
+template: plain
+name: compile_time_computing
+header: ### A Close To Trivial Example
+
+Here is an example (requiring C++14._[] at least):
+```
+constexpr int countBits(std::uint16_t v) {
+	int bits = 0;
+	for (; v; v >>= 1) bits += (v & 0x1);
+	return bits;
+}
+```
+
+To verify the function call takes place at compile-time you may …
+.pull-left[
+… either use that function to initialize `constexpr` data …
+
+```
+constexpr int n = bitCount(42);
+```
+]
+.pull-right[
+… or in any other context which requires a compile-time constant:
+
+```
+char s[bitCount(42)];
+```
+]
+
+.F[:
+A C++11 version would have to look like this as such a function is limited to
+a `return` statement only:
+```
+constexpr int countBits(std::uint16_t v) {
+	return v ? ((v & 0x1) + countBits(v >> 1) : 0;
+}
+```
+]
+
+---
+template: plain
+name: compile_time_computing
+header: ### Picking Up From There
+
+.N.center.large[
+Now that's … just boring!
+]
+
+--
+
+So lets go for something more involved:
+
+* At some point a program needs to call the sine function.
+
+--
+
+* It is determined such function calls are a performance bottle-neck.
+
+--
+
+* The arguments come only from a limited range (radians or degrees).
+
+--
+
+* There is no ultimate precision necessary, instead
+
+--
+  * a pre-calculated table with a fixed set of values should be used,
+
+--
+  * and intermediate values determined by linear interpolation.
+
+--
+
+.N.center.large[
+Sounds ambitious enough?
+]
+
+---
+template: plain
+header: ### Third Live Demo Starts
+
+Outline of demo – maybe varied or extended on request:
+
+* Starting with a proof of concept
+* Evaluating performance and …
+* … mean deviation from accurate value.
+
+--
+
+Everything cool so far?
+
+--
+
+* Then fasten your seat belts and …
+* … let's push the pedal to the metal!._[]
+
+.F[:
+A typical obstacle may be that C++11 does not require any of the
+`cmath`-functions to be `constexpr`!  
+(Actually it **IS** the case for `g++` but **not** for `clang++`.)
+So it may be you need to find an open source implementation of trig-functions
+– or whatever you need – which only builds on basic math (like approximating the
+sine function from the [Taylor Series]).
+**Note that such a substitute needs not be optimized for performance as it runs
+only once at compile-time.**
+]
+
+[Taylor Series]: https://en.wikipedia.org/wiki/Taylor_series
+
+---
+template: plain
+header: #### Summarizing Again
+
+Again think of:
+
+--
+.N.center.large[
+From the Many To the Few!
+]
+
+--
+
+The "many" are those who now use `quicksine` just like this:
+```
+// TBD !!!
+```
+
+--
+
+The "few" are those having written the code just walked through.
+
+--
+
+.I[
+Full code see **`Example_3`** in    
+https://github.com/tbfe-de/FPGA-Kongress_2019
+]
+
+---
+template: plain
+name: closing_note
+header: ### Closing Note
+eta: 12:44
+
+Feel free to contact me via **`mw@tbfe.de`** if you have any questions on
+
+--
+
+* *C++*._[] – no matter whether you are interested in using it
+
+  * as *"Better C"* only (= Zero-Overhead C++),
+  * as *"Classic C++"* (= C++98 Style), or
+  * as *"Modern C++"* (= C++11/14/17/20)
+
+.F[:
+Did you know: You can also mix C++ with Tcl Scripting, e.g. to improve
+time-critical parts of some software initially implemented in Tcl, which
+makes a nice and easy way of *"Rapid Prototyping"* …
+]
+
+--
+
+* the *Tcl Programming Language* and/or its *Standard Library*
+
+--
+
+* including Tk, the *Tcl Extension for GUI-Programming*
+
+--
+
+.N.center[
+***Thank You for Attending to (or Reading) this Presentation.***
+]
+
+</textarea>
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- ::::::::::::::::::::: )-: ereh TNETNOCLAER fo dne :::::::::::::::::::: -->
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+    <script src="remark.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightLanguage: 'c'
+      , highlightStyle: 'docco'
+      , countIncrementalSlides: false
+      });
+    </script>
+  </body>
+</html>
