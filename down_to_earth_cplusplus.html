@@ -424,7 +424,7 @@ And beyond:
 <!-- -->
 
 .I[
-Full code see **`Example_1`** in    
+Full code see **`Example1`** in    
 https://github.com/tbfe-de/FPGA-Kongress_2019
 ]
 
@@ -578,7 +578,7 @@ Optional (if there is sufficient interest and time allows):
 <!-- -->
 
 .I[
-Full code see **`Example_2`** in    
+Full code see **`Example2`** in    
 https://github.com/tbfe-de/FPGA-Kongress_2019
 ]
 
@@ -710,16 +710,61 @@ Outline of demo – maybe varied or extended on request:
 
 * Starting with a proof of concept
 * Evaluating performance and …
-* … mean deviation from accurate value.
+* … deviation from accurate value.._[]
 
---
+.F[:
+In case you are only reading this you may be interested in the result. It looks
+like this:
+```
+step0.cpp
+**************** TESTCASE 1 ****************
+0 to 90 degree lookup-table with 19 entries
+--------------------------------------------
+quicksine: 42137 usec for 1000000 calls
+         = 0.042137 usec per call
+std::sin : 134871 usec for 1000000 calls
+         = 0.134871 usec per call
+deviation: 2000 random data points
+     425 = exact results (21.25%)
+       0 = within 0.01 percent (0%)
+       0 = within 0.02 percent (0%)
+      20 = within 0.05 percent (1%)
+    1515 = within 0.1 percent (75.75%)
+      40 = within 0.25 percent (2%)
+       0 = within 0.5 percent (0%)
+       0 = within 1 percent (0%)
+       0 = within 2 percent (0%)
+       0 = worse results (0%)
+```
+]
 
-Everything cool so far?
-
---
+---
+template: plain
+header: #### Everything Cool So Far?
 
 * Then fasten your seat belts and …
 * … let's push the pedal to the metal!._[]
+
+--
+
+.N.center[
+`step1.cpp` – pull things belonging together in `class QuickSine`.
+]
+
+Modifications are systematic, some decisions to be made include:
+
+* Where to put common helper functions?
+* Continue to support white-box testing?
+
+.N.center[
+`step2.cpp` – finally achieved to make the constructor `constexpr`
+]
+
+Here `std::array` introduced in `step0.cpp` (because of its index-checking
+feature) had to be replaced with a native array.
+
+* This is because prior to C++17 neither `std::array::operator[]` nor
+  `std::operator::at` are `constexpr`.
 
 .F[:
 A typical obstacle may be that C++11 does not require any of the
@@ -736,6 +781,45 @@ only once at compile-time.**
 
 ---
 template: plain
+header: #### And the Winner is …?
+
+.N.center[
+`step3.cpp` – going for the victory lap.
+]
+
+More cleanup to make the class a candidate for production use.._[]
+
+* Still it is a single file solution …
+* … but comments already indicate what is intended to go where.
+
+.F[:
+So far it has been nothing but refactoring as the behavior is still the same:
+```
+step3.cpp
+**************** TESTCASE 1 ****************
+0 to 90 degree lookup-table with 19 entries
+--------------------------------------------
+quicksine: 53284.1 usec for 1000000 calls
+         = 0.0532841 usec per call
+std::sin : 134429 usec for 1000000 calls
+         = 0.134429 usec per call
+deviation: 2000 random data points
+     425 = exact results (21.25%)
+       0 = within 0.01 percent (0%)
+       0 = within 0.02 percent (0%)
+      20 = within 0.05 percent (1%)
+    1515 = within 0.1 percent (75.75%)
+      40 = within 0.25 percent (2%)
+       0 = within 0.5 percent (0%)
+       0 = within 1 percent (0%)
+       0 = within 2 percent (0%)
+       0 = worse results (0%)
+```
+]
+
+
+---
+template: plain
 header: #### Summarizing Again
 
 Again think of:
@@ -747,10 +831,19 @@ From the Many To the Few!
 
 --
 
-The "many" are those who now use `quicksine` just like this:
+The "many" are those who now use `quicksine` just like this:._[]
 ```
-// TBD !!!
+QuickSine<double, 0, 180, 19> quicksine;
+…
+auto x = quicksine(123);
 ```
+
+.F[:
+Or maybe with a type alias:
+```
+using MyQuickSine = QuickSine<double, 0, 180, 19>;
+```
+]
 
 --
 
@@ -759,7 +852,7 @@ The "few" are those having written the code just walked through.
 --
 
 .I[
-Full code see **`Example_3`** in    
+Full code see **`Example3`** in    
 https://github.com/tbfe-de/FPGA-Kongress_2019
 ]
 
