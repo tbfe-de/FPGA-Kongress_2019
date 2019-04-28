@@ -766,18 +766,85 @@ feature) had to be replaced with a native array.
 * This is because prior to C++17 neither `std::array::operator[]` nor
   `std::operator::at` are `constexpr`.
 
+---
+template: plain
+header: #### The Problems Of an Autodidact
+
+.N.center[
+Surely, since the beginning of our *Internet Times* much has changed.
+]
+
+--
+
+E.g. how much do
+
+* we still need to know in adavance compared
+* to what can we just look up when needed?
+
+--
+
+The problem comes when something doesn't work and compiler error messages aren't
+particularly hepful (which is not that rare in C++).
+
+--
+
+Sometimes it is very hard to decide:
+
+* Is it I', still on the right track and just missing a small point?
+* Or should I back-out substantuially and try a different approach?
+
+.center.large[
+This has often hit me too!._[]
+]
+
 .F[:
-A typical obstacle may be that C++11 does not require any of the
-`cmath`-functions to be `constexpr`!  
-(Actually it **IS** the case for `g++` but **not** for `clang++`.)
-So it may be you need to find an open source implementation of trig-functions
-– or whatever you need – which only builds on basic math (like approximating the
-sine function from the [Taylor Series]).
-**Note that such a substitute needs not be optimized for performance as it runs
-only once at compile-time.**
+And it is just one reason why you should allow some time to try out ideas with
+what I call "proof of concept" approaches, like the one shown in this short
+series.
+]
+
+---
+template: plain
+header: #### Lessons Learned (Personally)
+
+Here is a list of the major stumble stones that hit me during this little
+"Proof of Concept" series.
+
+--
+
+* C++11 does not require any of the `cmath`-functions to be `constexpr`
+
+--
+
+  * Actually it **IS** the case for `g++` but **not** for `clang++`.._[]
+
+.F[:
+If your compile time computations require library functions that aren't
+`constexpr` you need to find an open source implementation (in this case of
+the trig-function) which only builds on basic math, like e.g. approximating
+the sine from the [Taylor Series].  
+While I'm at it: Wikipedia has a nice article about computing square roots
+exploiting some specific properties of the IEEE floating point format:
+https://en.wikipedia.org/wiki/Fast_inverse_square_root
 ]
 
 [Taylor Series]: https://en.wikipedia.org/wiki/Taylor_series
+
+--
+
+* Neither `array::operator[]` nor `array::at` are `constexpr` in C++14.
+
+--
+
+  * This made it necessary to switch back to a native array.
+
+--
+
+* For some reason you need to add an initializer for the look-up table.
+
+--
+
+  * Despite the actuall initialization follows later in a loop.
 
 ---
 template: plain
