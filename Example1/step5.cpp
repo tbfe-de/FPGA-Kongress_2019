@@ -4,7 +4,7 @@
 
 #include "pxtn.h"
 
-PN_((Basic Tests for Voltage, Current, and Power Class))
+PN_(Basic Tests for class `Voltage`, `Current`, and `Power`)
 
 enum class Unit { V, A, W };
 
@@ -19,7 +19,7 @@ public:
 	constexpr auto operator-() const 	{ return T{-value}; }
 	constexpr auto& operator+=(TS rhs)	{ value += rhs.value; return downcasted(); }
 	constexpr auto& operator-=(TS rhs)	{ value -= rhs.value; return downcasted(); }
-	constexpr auto& operator*=(double rhs) 	{ value *= rhs; return downcasted(); }
+	constexpr auto& operator*=(double rhs) 	{ value *= rhs;	return downcasted(); }
 	constexpr auto& operator/=(double rhs) 	{ value /= rhs; return downcasted(); }
 };
 
@@ -76,61 +76,69 @@ public:
 };
 
 void voltage_static_constructors() {
+//      =========EXPECT		===================TEST
 PX_(	"4.8600"	, (	Voltage::V (4.86)	).get_V());
 PX_(	"4860.0000"	, (	Voltage::kV(4.86)	).get_V());
 PX_(	"0.0049"	, (	Voltage::mV(4.86)	).get_V());
 }
 
 void voltage_literal_unit_suffixes() {
-PX_(	"4.8600"	, (	4.86_V		).get_V());
-PX_(	"4860.0000"	, (	4.86_kV		).get_V());
-PX_(	"0.0049"	, (	4.86_mV		).get_V());
+//      =========EXPECT		================== TEST
+PX_(	"4.8600"	, (	4.86_V			).get_V());
+PX_(	"4860.0000"	, (	4.86_kV			).get_V());
+PX_(	"0.0049"	, (	4.86_mV			).get_V());
 }
 
 void voltage_by_unit_getters() {
 	auto v = 4.86_V;
-PX_(	"4.8600"	, v.get_V()	);
-PX_(	"4860.0000"	, v.get_mV()	);
-PX_(	"0.0049"	, v.get_kV()	);
+//      =========EXPECT		===================TEST
+PX_(	"4.8600"	,	v.get_V()		);
+PX_(	"4860.0000"	,	v.get_mV()		);
+PX_(	"0.0049"	,	v.get_kV()		);
 }
 
 void voltage_unary_plus_minus() {
-PX_(	"4.8600"	, (	+4.86_V		).get_V());
-PX_(	"-4.8600"	, (	-4.86_V		).get_V());
-PX_(	"4.8600"	, (	-(-4.86_V)	).get_V());
+//      =========EXPECT		===================TEST
+PX_(	"4.8600"	, (	+4.86_V			).get_V());
+PX_(	"-4.8600"	, (	-4.86_V			).get_V());
+PX_(	"4.8600"	, (	- -4.86_V		).get_V());
 }
 
 void voltage_assigning_plus_minus() {
 	auto v = 4_V;
-PX_(	"4.0000"	, (	v		).get_V());
-PX_(	"4.8600"	, (	v += 860_mV	).get_V());
-PX_(	"4.8600"	, (	v          	).get_V());
-PX_(	"0.8600"	, (	v -= 4_V       	).get_V());
-PX_(	"0.8600"	, (	v		).get_V());
+//      =========EXPECT		===================TEST
+PX_(	"4.0000"	, (	v			).get_V());
+PX_(	"4.8600"	, (	v += 860_mV		).get_V());
+PX_(	"4.8600"	, (	v          		).get_V());
+PX_(	"0.8600"	, (	v -= 4_V       		).get_V());
+PX_(	"0.8600"	, (	v			).get_V());
 }
 
 void voltage_binary_plus_minus() {
+//      =========EXPECT		===================TEST
 PX_(	"4.8600"	, (	4_V + 860_mV	).get_V());
 PX_(	"4.0000"	, (	4.86_V - 860_mV	).get_V());
 }
 
 void voltage_assigning_multiply_divide() {
 	auto v = 4_V;
+//      =========EXPECT		===================TEST
 PX_(	"5.0000"	, (	v *= 1.25	).get_V());
 PX_(	"5.0000"	, (	v        	).get_V());
 PX_(	"2.5000"	, (	v /= 2		).get_V());
 }
 
 void voltage_binary_multiply_divide() {
+//      =========EXPECT		===================TEST
 PX_(	"5.0000"	, (	4_V * 1.25	).get_V());
 PX_(	"2.5000"	, (	5_V / 2		).get_V());
 }
 
 void misc_others_playground() {
-PX_(	"0.0200"	, (20_mA).get_A());
-//	Voltage v = 20_mA;
-PX_(	"97.2000"	, Power::W(4.86_V, 20_mA).get_mW());
-PX_(	"97.2000"	, Power::W(20_mA, 4.86_V).get_mW());
+//      =========EXPECT	  	===================TEST	
+PX_(	"0.0200"	, (	20_mA			).get_A());
+PX_(	"97.2000"	, (	Power::W(4.86_V, 20_mA)	).get_mW());
+PX_(	"97.2000"	, (	Power::W(20_mA, 4.86_V)	).get_mW());
 }
 
 int main() {
@@ -146,4 +154,7 @@ int main() {
 	voltage_binary_plus_minus();
 	voltage_assigning_multiply_divide();
 	voltage_binary_multiply_divide();
+
+// 	============================ SHOULD NOT COMPILE
+//	Voltage v = 20_mA;
 }

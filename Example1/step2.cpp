@@ -3,7 +3,7 @@
 class Voltage {
 	double value;
 public:
-	Voltage(double v) : value(v) {}
+	/*explicit*/ Voltage(double v) : value(v) {}
 	double get() const { return value; }
 };
 

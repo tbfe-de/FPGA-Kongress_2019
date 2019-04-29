@@ -50,10 +50,10 @@
 
 #endif
 
-#define PN_(testname)\
+#define PN_(...)\
 	struct PN_ {\
 		PN_(const char* fn) {\
-			std::cout << "... " #testname;\
+			std::cout << "... " #__VA_ARGS__;\
 			if (fn[0]) std::cout << "(" << fn << ")";\
 			std::cout << std::endl;\
 		}\

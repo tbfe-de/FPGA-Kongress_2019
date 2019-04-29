@@ -4,7 +4,7 @@
 #include <iostream>
 #endif
 
-#if 1
+#ifdef CLASSIC_TYPEDEF
 typedef double Current;
 typedef double Voltage;
 typedef double Power;
