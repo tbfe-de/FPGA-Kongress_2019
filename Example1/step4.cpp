@@ -1,6 +1,6 @@
 #include "pxtn.h"
 
-PN_(Basic Tests for Voltage Class)
+PN_(Basic Tests for `class` Voltage)
 
 class Voltage {
 	double value;

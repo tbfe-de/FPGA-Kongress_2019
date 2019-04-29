@@ -258,6 +258,7 @@ https://github.com/tbfe-de/FPGA-Kongress_2019
 template: plain
 name: case_studies_overview
 header: ## Three Short Case Studies
+eta: 11:21
 
 There are people telling you:
 
@@ -269,6 +270,7 @@ Otherwise you'll never exploit the advantages of OOP.._[]
 .F[:
 Note that C++ is much more than "just another OOP-Language". Especially its
 template feature – which at the advanced edge leads to Metaprogramming – is
+[Metaprogramming]: https://en.wikipedia.org/wiki/Generic_programming
 relatively unique among other language, which at first, cursory glance may look
 similar.
 ]
@@ -298,6 +300,7 @@ If you can compile your code with C++ (can you?)
 ---
 template: plain
 header: ### WHAT we will do here
+eta: 11:22
 
 This presentation
 
@@ -323,6 +326,7 @@ optimize the resulting code – optimize *beyond* what C allows you to do.
 ---
 template: plain
 header: ### HOW we will do it
+eta: 11:23
 
 The following Code Walks are
 
@@ -356,6 +360,7 @@ So you have a chance to step in and control progress AND direction.
 template: plain
 name: strong_arithmetic_types
 header: ## Strong Arithmetic Types
+eta: 11:25
 
 .pull-left[
 Doesn't this fragment look nice?
@@ -399,57 +404,234 @@ show_VA(get_U() % get_I());
 ---
 template: plain
 header: ### First Live Demo Starts
+eta: 11:28
 
 .center.large[
 SO LET'S SEE
 ]
 
-Outline of demo – maybe varied or extended on request:
-
-* `typedef`-types are just aliases – *not strong types*
-* same for type definitions in the new C++ `using` syntax
-* BUT: classes are real types …
-* THOUGH: … lead to a lot of duplicated code
-* SOLUTION: a tiny template trick
+.N.center[
+`step0.cpp` – motivating type safety …
+]
 
 --
 
-And beyond:
+* `typedef`-types are just aliases – *not strong types*
 
-* How to extend to full unit checking
-* Maybe [Boost.Units] make sense for you?
+--
 
-[Boost.Units]: https://www.boost.org/doc/libs/release/doc/html/boost_units.html
+* same for type definitions in the new C++ `using` syntax
 
-<!-- -->
+--
+
+.center.large[
+OK, so it was a bad idee.
+]
+
+---
+template: plain
+header: #### Trying a Different Approach
+eta: 11:31
+
+.N.center[
+`step1.cpp` – a very first PoC (proof of concept)
+]
+
+* `struct`-s._[] are real types …
+
+.F[:
+And of course `class`-es are, because in C++ the only difference between
+`struct` and `class` is that the former by default starts with `public`
+and the latter starts with `private`.
+]
+
+--
+
+.N.center[
+`step2.cpp` – minimally fleshing it out
+]
+
+* Looks like type-checking works as expected :-)
+
+--
+
+* But how avoid developing the habit to "throw in" just enough
+  `.get()`-s to silence compiler error messages?
+
+--
+
+.center.large[
+C++ allows it!
+]
+
+---
+template: plain
+header: #### Looks Promising So Far
+eta: 11:33
+
+.N.center[
+`step3.cpp` – blowing up the strong type PoC.
+]
+
+* Actually it is possible to write your code like this …
+
+```
+int main() {
+	Voltage u1 = 5.0_V;
+	Current i1 = 20_mA;
+	Power p1 = u1 * i1;
+	std::cout << p1.get_mW() << " mW" << std::endl;
+}
+```
+
+--
+
+* … at least when a due amount of evidence is invested.._[]
+
+.F[:
+In this example a lot of code is commented out. The reason is to suggest you
+shouldn't actually write code that goes untested … and therefore **only the
+minimum to make the code compile** is implemented. The comments are meant to
+show what should probably added if these strong types are made available in a
+library.
+]
+
+---
+template: plain
+header: #### Reducing Focus For a Moment
+eta: 11:36
+
+.N.center[
+`step4.cpp` – A "more fully blown" example for `Voltage` class
+]
+
+* Obviously there is a lot of code required …
+
+--
+
+* … but it's rather systematic.
+
+--
+
+.center.large[
+So how make it more DRY?._[]
+]
+
+.F[:
+DRY is an acronym often used to refer to the *Don't Repeat Yourself" principle
+which means you should strive for avoiding large parts of duplicate code.
+]
+
+--
+
+Two solutions come to mind:
+
+* Re-structure and shift common parts into a template or base class.
+
+* Generate systematic code from a simplified description.
+
+---
+template: plain
+header: #### Getting Serious About It
+eta: 11:41
+
+.N.center[
+`step5.cpp` – a templated base class.._[]
+]
+
+.F[:
+An alternative approach using the C-preprocessor as code generator is beyond
+the scope of this short talk. It could also be here to reduce the systematic
+code sequences.
+]
+
+Before looking at the details understand that most developers
+
+* need no delve into the details of the implementation details
+
+* but just can profit from the strong types like that:
+
+.pull-left[
+```
+…
+158:	int main() {
+159:		Voltage v = 20_mA;
+160:	}
+```
+]
+.pull-right[
+```
+step5.cpp:159:14:  
+  error: conversion from
+  ´Current´ to  non-scalar type
+  ´Voltage´ requested
+```
+]
+
+---
+template: plain
+header: #### Where To Go from here?
+eta: 11:44
 
 .I[
 Full code see **`Example1`** in    
 https://github.com/tbfe-de/FPGA-Kongress_2019
 ]
 
+.center.large[
+Just whetted your appetite?
+]
+
+* Don't underestimate the effort required to extend it to all the physical
+  units your program requires!
+
+--
+
+* Maybe [Boost.Units] makes sense for you.._[]
+
+[Boost.Units]: https://www.boost.org/doc/libs/release/doc/html/boost_units.html
+
+.F[:
+Copied from its description:  
+*The Boost.Units library is a C++ implementation of dimensional analysis in a
+general and extensible manner, treating it as a generic compile-time
+metaprogramming problem. With appropriate compiler optimization, no runtime
+execution cost is introduced, facilitating the use of this library to provide
+dimension checking in performance-critical code. Support for units and
+quantities (defined as a unit and associated value) for arbitrary unit system
+models and arbitrary value types is provided, as is a fine-grained general
+facility for unit conversions. Complete SI and CGS unit systems are provided,
+along with systems for angles measured in degrees, radians, gradians, and
+revolutions and systems for temperatures measured in Kelvin, degrees Celsius
+and degrees Fahrenheit. The library architecture has been designed with
+flexibility and extensibility in mind; demonstrations of the ease of adding
+new units and unit conversions are provided in the examples.*
+]
+
 ---
 template: plain
 name: two_faces_of_templates
 header: ## The Two Faces of Templates
+eta: 11:45
 
 Assume we have just completed a nice piece of code, implementing a little
 event queue …._[]
 
 ```
 class EventQueue {
-	using std::size_t;
-	const size_t Queue = 10+1;
-	Event data[Queued];
+	static const std::size_t QueueSize = 10+1;
+	Event data[QueueSize];
 	size_t iput = 0, iget = 0;
-	static size_t wrap(size_t idx) { return idx % Queued; }
+	static std::size_t wrap(std::size_t idx) {
+		return idx % QueueSize;
+	}
 public:
 	bool empty() const;
 	bool full() const;
-	size_t size() const;
+	std::size_t size() const;
 	void put(Event);
-	void get(Event &);
-	Event peek(size_t) const;
+	void get(Event&);
+	Event peek(std::size_t = 0) const;
 };
 ```
 
@@ -460,6 +642,7 @@ Payload `Event` not further detailed (maybe assume an enumeration type).
 ---
 template: plain
 header: ### Second Live Demo Starts
+eta: 11:47
 
 .center.large[
 Where to go from here?
@@ -471,8 +654,20 @@ Outline of demo – maybe varied or extended on request:
 
 * Explain the code, especially "full" and "empty" conditions.
 * Explain its current limitations.
-* Generalize the payload via a template type argument.
-* Generalize the maximum queue size via a template numeric argument.
+
+--
+
+.N.center[
+`step1.cpp` – generalize into a `RingBuffer` template.
+]
+
+--
+
+Parametrize
+
+* payload via a template `typename` argument and
+
+* maximum queue size via a template `std::size_t` argument.
 
 ---
 template: plain
@@ -480,19 +675,20 @@ header: #### Intermezzo: Now That Was the Easy Part
 
 Let's see what we've got so and how it changes the usage:
 ```
-template<typename PayLoad, std::size_t MaxSize>
+template<typename Payload, std::size_t Size>
 class RingBuffer {
-	using std::size_t;
-	PayLoad data[MaxSize+1];
-	size_t iputa = 0, iget = 0;
-	static size_t wrap(size_t idx) { return idx % (MaxSize+1); }
+	Payload data[Size+1];
+	std::size_t iput = 0, iget = 0;
+	static std::size_t wrap(std::size_t idx) {
+		return idx % (Size+1);
+	}
 public:
 	bool empty() const;
 	bool full() const;
-	size_t size() const;
-	void put(PayLoad);
-	void get(PayLoad &);
-	PayLoad peek(size_t) const;
+	std::size_t size() const;
+	void put(const PayLoad&);
+	void get(PayLoad&);
+	PayLoad peek(std::size_t = 0) const;
 };
 ```
 
@@ -565,34 +761,80 @@ C++ templates **may** become a bit or even much more complicated
 --
 
 .N.center[
-But that again is knowledge **only some few** need to have!._[]
+But that again is knowledge **only some few** need to have!
+]
+
+(Well … except maybe for the ability to interpret error messages.._[])
+
+.F[:
+Yes! It was a bit of a white lie to get you started. Actually deciphering error
+messages from bad use of templates may need special skills at times. But then
+there comes C++20 with its promise a new feature called [Constraints] will
+improve the current situation substantially.
 ]
 
 --
 
-Optional (if there is sufficient interest and time allows):
+.N.center[
+`step2.cpp` – a closer look to argument handling
+]
 
-* Discuss argument handling and optimization chances.
-* Discuss making the queue thread-safe.
+If time allows and there is sufficient interest it may be discussed 
+
+* why the argument to `put` was turned into `const Payload&` and
+
+* how this could be optimized using with [Metaprogramming].
+
+[Metaprogramming]: https://en.wikipedia.org/wiki/Generic_programming
+
+---
+template: plain
+header: #### Optional Further Extensions
+
+Discuss generalizing handling of the "full" and "empty" case:._[]
+
+.F[:
+For an even more advance extension consider how "thread-safe" variants of the
+`RingBuffer` could be provided via derived classes or "policy"-style template
+argument.
+]
+
+--
+
+* ignore situation
+  * overwriting elements on `put`
+  * returning default on `get`
 
 <!-- -->
+
+--
+
+* ignore situation, returning
+  * `false` on `put` when `full` (otherwise `true`)
+  * `false` on `get` when `empty` (otherwise `true`)
+
+<!-- -->
+
+--
+
+* throw exception
+  * on calling `put` when `full`
+  * on calling `get` when `empty`
+
+<!-- -->
+
+--
 
 .I[
 Full code see **`Example2`** in    
 https://github.com/tbfe-de/FPGA-Kongress_2019
 ]
 
-.F[:
-Yes! It's a bit of a white lie to get you started. Actually deciphering error
-messages from bad use of templates may need special skills at times. But then
-there comes C++20 with its promise a new feature called [Constraints] will
-improve the current situation substantially.
-]
-
 ---
 template: plain
 name: compile_time_computing
 header: ## Computing at Compile Time
+eta: 12:10
 
 C++11 has added `constexpr` to indicate
 
@@ -627,6 +869,7 @@ You may
 template: plain
 name: compile_time_computing
 header: ### A Close To Trivial Example
+eta: 12:11
 
 Here is an example (requiring C++14._[] at least):
 ```
@@ -667,6 +910,7 @@ constexpr int countBits(std::uint16_t v) {
 template: plain
 name: compile_time_computing
 header: ### Picking Up From There
+eta: 12:13
 
 .N.center.large[
 Now that's … just boring!
@@ -705,6 +949,7 @@ Sounds ambitious enough?
 ---
 template: plain
 header: ### Third Live Demo Starts
+eta: 12:14
 
 Outline of demo – maybe varied or extended on request:
 
@@ -741,6 +986,7 @@ deviation: 2000 random data points
 ---
 template: plain
 header: #### Everything Cool So Far?
+eta: 12:16
 
 * Then fasten your seat belts and …
 * … let's push the pedal to the metal!._[]
@@ -769,6 +1015,7 @@ feature) had to be replaced with a native array.
 ---
 template: plain
 header: #### The Problems Of an Autodidact
+eta: 12:19
 
 .N.center[
 Surely, since the beginning of our *Internet Times* much has changed.
@@ -806,6 +1053,7 @@ series.
 ---
 template: plain
 header: #### Lessons Learned (Personally)
+eta: 12:25
 
 Here is a list of the major stumble stones that hit me during this little
 "Proof of Concept" series.
@@ -849,6 +1097,7 @@ https://en.wikipedia.org/wiki/Fast_inverse_square_root
 ---
 template: plain
 header: #### And the Winner is …?
+eta: 12:29
 
 .N.center[
 `step3.cpp` – going for the victory lap.
@@ -888,6 +1137,7 @@ deviation: 2000 random data points
 ---
 template: plain
 header: #### Summarizing Again
+eta: 12:32
 
 Again think of:
 
@@ -927,7 +1177,7 @@ https://github.com/tbfe-de/FPGA-Kongress_2019
 template: plain
 name: closing_note
 header: ### Closing Note
-eta: 12:44
+eta: 12:35
 
 Feel free to contact me via **`mw@tbfe.de`** if you have any questions on
 
