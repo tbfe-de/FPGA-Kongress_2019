@@ -19,13 +19,13 @@ ALL_STEP_VARIANTS=\
 all: $(ALL_STEP_VARIANTS)
 	@echo "All variants up-to-date"
 step0-c: step0.cpp
-	$(CC) -o $@ -xc-std=c99 $<
+	$(CC) -o $@ -xc -std=c99 $<
 step0-cpp-classic-typedef: step0.cpp
 	$(CC) -o $@ -std=c++98 -DCLASSIC_TYPEDEF $<
 step0-cpp11-type-alias: step0.cpp
-	$(CC) -o $@ -std=c++98 $<
+	$(CC) -o $@ -std=c++11 $<
 step1-c-struct: step1.cpp
-	$(CC) -o $@ -xc-std=c99 $<
+	$(CC) -o $@ -xc -std=c99 $<
 step1-cpp-struct: step1.cpp
 	$(CC) -o $@ -std=c++98 $<
 step2-cpp-classic: step2.cpp

@@ -1,4 +1,5 @@
 #ifndef __cplusplus
+#define CLASSIC_TYPEDEF
 #include <stdio.h>
 #else
 #include <iostream>
