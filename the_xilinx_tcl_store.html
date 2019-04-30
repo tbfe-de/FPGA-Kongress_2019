@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Tcl-Only Networking</title>
+    <title>The XILINX Tcl Store</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <!-- when changing the stylesheet file please see also remark below -->
     <link rel="stylesheet" type="text/css" href="styling.css" />
@@ -155,7 +155,7 @@ name: frontmatter
 ]
 .client.pull-right[
 	FPGA-Kongress 2019, München  
-	2019-05-21 to 2019-05-23
+	2019-05-21 to 2019-05-23  
 	ELEKTRONIK PRAXIS &  
 	PLC2 Schulungscenter
 ]
@@ -236,18 +236,266 @@ name: content
 header: ## Agenda
 eta: 11:20
 
+* [Tcl Command Input			](#tcl_command_input)
 
---------------------------------------------------------------------------
+* [Sourcing Commands			](#sourcing_commands)
 
-* TBD
+* [Defining `proc`-s			](#defining_procs)
 
---------------------------------------------------------------
+* [Manual and Autoloading		](#manual_and_autoloading)
+
+* [The `unknown` procedure		](#the_unknown_procedure)
+
+* [Quick Introduction to Git		](#quick_intro_to_git)
+
+* [Tcl-Store File Organization	](#tcl_store_file_org)
+
+---
+template: plain
+name: tcl_command_input
+header: ## Tcl Command Input
+eta: 11:21
+
+This is how you basically work if you don't access Vivado via the GUI but
+through the (Tcl-) command line:
+
+* Type a command …
+  * … to the Tcl console._[] (bottom of GUI screen) or
+  * … in `-tcl` mode in a "terminal emulator" (Linux)
+  * … or a (DOS) "command box" (Windows)
+
+.F[:
+You can switch back and forth between GUI mode (with the Tcl console) to a
+"terminal emlator" or "command box" any time issuing the (Tcl) commands
+`stopgui` and `startgui`.
+]
+
+<!-- -->
+
+--
+
+* View the reaction …
+  * … as text response (on Tcl console, terminal emulator or command box)
+  * … on the GUI window (depending on the command there may or may not be one)
+
+<!-- -->
+
+--
+
+* Repeat as long as necessary
+
+---
+template: plain
+name: sourcing_commands
+header: ## Sourcing Commands
+eta: 11:22
+
+You can prepare a sequence of Tcl commands in a (text) file also called a
+*Tcl script* or *command script*:
+
+--
+
+* Run these commands
+  * either as complete activity._[] in `-batch` mode
+  * or via the `source` command with the name of the file as argument
+
+.F[:
+Of course you can also switch to GUI mode with the command `startgui` during
+"scripting".
+]
+
+--
+
+.N.center[
+As an extension over the standard behavior Vivado's `source` command shows all
+lines read from the script file on the screen as Tcl comments.
+]
+
+---
+template: plain
+name: defining_procs
+header: ## Defining `proc`-s
+eta: 11:23
+
+When you want even more automation in scripting by using flow control logic._[]
+you best bundle the actions into a subroutine or "Tcl `proc`":
+
+During developing and debugging the (control flow) logic the following approach
+makes sense:
+
+--
+
+* Keep the script file open in a text editor and
+  * modify its content as necessary
+  * save it back to the file
+
+<!-- -->
+
+--
+
+* from the Tcl console `source` the script file
+
+<!-- -->
+
+--
+
+* run the subroutine …
+  * simply by using its name like a command
+  * adding appropriate arguments
+
+<!-- -->
+
+--
+
+* as necessary repeat
+  * from previous step varying the arguments or
+  * from first step when the (control flow) logic changes
+
+---
+template: plain
+name: manual_and_autoloading
+header: ## Manual and Autoloading
+eta: 11:24
+
+If you are finally happy with what your subroutines with Tcl commands do
+
+* you may `source` the definitions from one of the `init` files.
+
+--
+
+* or automate that via autoloading and packages
+  * to `source`-ing the right file (with the `proc` definition) whenever an
+    unknown command is encountered
+  * providing a mechanism for versioning and selection on version numbers
+  * including to provide non-Tcl extensions implemented as compiled C or C++
+    programs.
+
+<!-- -->
+
+--
+
+.N.center[
+Details on `autoload` and `package`-s will not be covered further here.._[]
+]
+
+.F[:
+As this talk is mainly focussed on the XILINX Tcl store demonstrating details
+on autoloading make not so much sense. What is important is just to understand
+that Tcl has features triggered by unknown commands that are typically utilized
+to build and "infra structure" for user-loadable extensions.
+]
+
+---
+template: plain
+name: the_unknown_procedure
+header: ## The `unknown` Procedure
+eta: 11:25
+
+As already mentioned this procedure is tailored to automatically add
+sub-routines via the `source` command.
+
+.N.center[
+Listing what it does is done with: `info body unknown`
+]
+
+--
+
+The actual output._[] is not shown here …
+
+* … because it is lengthy and
+
+* … to avoid copyright issues.
+
+.F[:
+Still feel encouraged to look at it in both, a standard Tcl shell and the Tcl
+interpreter integrated vivado Vivado.
+Actually doing –  if only to satisfy curiosity – may be revealing!  
+**In `tclsh` or `wish`** the body is rather lengthy but what it basically does
+is completing commands entered interactively in case they are unambiguously
+abbreviating a known command, eventually will auto-load `proc`-definitions, and
+– as last resort to make sense of interactive input – may execute an operating
+system command with the given name.  
+**In Vivado** the body looks simpler and provides a special feature: If a
+pattern inside square brackets looks like an index specification it is returned
+unchanged, i.e. **not** executed as command, probably leading to a
+_"command not found"_ error.
+]
+
+---
+template: plain
+name: quick_intro_to_git
+header: ## Quick Introduction to Git
+eta: 11:26
+
+Git is a distributed versioning system.
+
+--
+
+* It does not use a central repository but replicates
+  * all versions
+  * everywhere.
+
+<!-- -->
+
+--
+
+* The three most important activities are
+  * **initializing** a new or **cloning** an existing repository
+  * **adding** and **committing** changes to the code
+  * eventually **pushing** these to a back-up location.
+
+--
+
+.N.center[
+Details may be shown on request in a live demo now …._[]
+]
+
+.F[:
+Or if all of you already know enough Git basics proceed to the next page.
+]
+
+---
+template: plain
+name: tcl_store_file_org
+header: ## Tcl Store File Organization
+eta: 11:29
+
+This makes the main part of that talk.
+
+.N.center[
+The structure will be explored and explained in a live demo now.
+]
+
+--
+
+Finally, for completeness:
+
+* As an alternative 
+  * instead to running any extension via Tcl scripting as a command
+  * you may also connect t to the GUI.._[]
+
+.F[:
+Details see **Vivado Design Suite UG893** "Using The Vivado IDE":
+*Adding Custom Menu Commands*
+]
+
+<!-- -->
+
+--
+
+* It has an advantage and a disadvantage:
+  * If you do most of your work via the GUI anyway, running extensions based on
+    Tcl-scripting may feel more "organic".
+  * It eliminates most chances for supplying additional information and getting
+    more control via (subroutine) arguments.
+
+<!-- -->
 
 ---
 template: plain
 name: closing_note
-header: ### Closing Note
-eta: 14:59
+header: ## Closing Note
+eta: 11:44
 
 Feel free to contact me via **`mw@tbfe.de`** if you have any questions on
 
