@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Down To Earth C++ For Embedded</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- when changing the stylesheet file please see also remark below -->
+    <link rel="stylesheet" type="text/css" href="styling.css" />
+  </head>
+  <body>
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- :::::::::: template pages come first ... skip to REALCONTENT ::::::::: -->
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<textarea id="source">
+
+layout: true
+name: blank
+styling: styling.css
+styling-by: Martin Weitzel
+
+<!--
+  *****************************************************************************
+  Template used for title page (only)
+  *****************************************************************************
+  Please change the 'styling-by:' attribute if you change the style-sheet.
+-->
+
+.stylehint[
+Styled with [{{styling}}]({{styling}}) by {{styling-by}}
+]
+
+---
+layout: true
+name: plain
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](https://tbfe.de) &#8199;&#8199; 2019-05-22 (11:15 - 12:45)
+customer:  [ELEKTRONIK PRAXIS & PLC2](http://www.fpga-kongress.de/de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages NOT referring to any Info-Graphic
+  *****************************************************************************
+  The following attributes are mandatory FOR THE TEMPLATE PAGE and should
+  simply be left empty if not meaningful.
+
+  copyright: will be reproduced in each page footer first
+  branding: will reproduced in each page footer next
+  customer: will be reproduced in each page footer last
+
+  As the above attributes are part of several page templates a global replace
+  should be used for consistent changes.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+.eta[ETA: {{eta}}]
+
+{{header}}
+
+.pagefooter[
+{{copyright}}: {{branding}} .fpga-logo[{{customer}}]
+]
+
+---
+layout: true
+name: linkinfo
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](https://tbfe.de) &#8199;&#8199; 2019-05-22 (11:15 - 12:45)
+customer:  [ELEKTRONIK PRAXIS & PLC2](http://www.fpga-kongress.de/de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages INTRODUCING to a new Info-Graphic
+  *****************************************************************************
+  On this kind of pages a size-reduced version of the whole info graphic will
+  be reproduced and occupies approximately 2/3 of the page width. So only add
+  little information, preferably links to later pages dealing with single
+  sections of the info graphic.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  graphic: file path to of the infographic EXCLUDING the suffix.
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+.eta[{{eta}}]
+
+{{header}}
+
+.infographic[
+[![Info-Grafik](InfoGraphics/{{graphic}}.png)](InfoGraphics/{{graphic}}.png
+                "Click to open – add [CTRL+] SHIFT for new [tabbed] window")
+]
+
+.pagefooter[
+{{copyright}}: {{branding}} .fpga-logo[{{customer}} ]
+]
+
+---
+layout: true
+name: linkinfoA3
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](https://tbfe.de) &#8199;&#8199; 2019-05-22 (11:15 - 12:45)
+customer:  [ELEKTRONIK PRAXIS & PLC2](http://www.fpga-kongress.de/de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages INTRODUCING to a new Info-Graphic
+  *****************************************************************************
+  On this kind of pages a size-reduced version of the whole info graphic will
+  be reproduced and occupies approximately 2/3 of the page width. So only add
+  little information, preferably links to later pages dealing with single
+  sections of the info graphic.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  graphic: file path to of the infographic EXCLUDING the suffix.
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+.eta[{{eta}}]
+
+{{header}}
+
+.infographicA3[
+[![Info-Grafik](InfoGraphics/{{graphic}}.png)](InfoGraphics/{{graphic}}.png
+                "Click to open – add [CTRL+] SHIFT for new [tabbed] window")
+]
+
+.pagefooter[
+{{copyright}}: {{branding}} .fpga-logo[{{customer}} ]
+]
+
+---
+layout: false
+template: blank
+name: frontmatter
+
+.title[
+	Down To Earth C++ For Embedded
+]
+
+.subtitle[
+	How to benefit from C++ without  
+	"Doing everything completely
+	different, beginning tomorrow".
+]
+.author.pull-left[
+	Durchführung  
+	Dipl.-Ing. Martin Weitzel  
+	Technische Beratung für EDV  
+	https://tbfe.de  
+
+]
+.client.pull-right[
+	FPGA-Kongress 2019, München  
+	2019-05-21 to 2019-05-23  
+	ELEKTRONIK PRAXIS &  
+	PLC2 Schulungscenter
+]
+
+.F[:
+You may use the code examples from this presentation in compliance with the
+[Creative Commons BY-SA License](http://creativecommons.org/licenses/by-sa/2.0/).
+As it has been created using the free HTML4-Tool [Remark](http://remarkjs.com),
+its content is written using the
+[Markdown-Syntax](http://daringfireball.net/projects/markdown/syntax),
+so you may even enhance the purely electronic (non-printed) form with your own
+annotations, only by means of any ordinary text editor. Just hit the P-key while
+viewing this in an Internet browser and follow instructions.
+]
+
+???
+
+(use +/- above to adjust the font size for convenient reading)
+
+Remark allows to add presenter notes to each page. As that feature is **not**
+used by the author of that presentation, it is available for private annotations
+from [this page](#content) on.
+
+Assuming you have downloaded and stored this presentation as HTML-file, proceed
+as follows:
+
+* Open the file in a text editor of your choice.
+
+* Locate the page which you want to annotate.
+
+  * You may do so by just scrolling down (but often it is easier to)
+  * use the text search feature of your editor.
+
+* Locate the separator to the next page (i.e. `---` in a line of its own).
+
+* Before that add another line with three question marks (`???`) only.
+
+Between these to separator lines you can put your annotations and view these
+by using as you just view this page.
+
+**Hint:**
+Indent code examples with four spaces at the beginning of each line and they
+will be displayed with their original line breaks. As an example, below the
+page structure including annotations is shown:
+
+    template: plain
+    name: used_for_internal_links
+    header: ## Shown at the Top of the Page
+
+    Simply scroll down through this document loaded in an editor and you will
+    probably catch the basics of Markdown-Syntax easily, e.g.  how to put in
+    *slight* or **strong** emphasis or [add a link](http://tbfe.de/downloads).
+
+    ???
+    From here follow the [Presenter Notes], i.e. your private annotations
+    ...
+    ...
+
+    [Presenter Notes]: adding-longer-links-that-keeps-text--uncluttered
+
+    ...
+    up to here.
+    ---
+
+To return to the normal view, now press the P-key once more.
+
+<!--
+If you want to put in meta-annotations, i.e. text that is not even shown
+after pressing the P-key, simply use HTML comments, like it is done here.
+-->
+
+---
+template: plain
+class: agenda
+name: content
+header: # Agenda
+eta: 11:20
+
+-------------------------------------------------------------------------------
+* [Three Short Case Studies – Overview		   ](#case_studies_overview)
+
+* [Strong Arithmetic Types – Possible in C++? 	   ](#strong_arithmetic_types)
+
+* [Templates – From the Many To the Few		   ](#two_faces_of_templates)
+
+* [Compile-Time Computing – A Facet of Modern C++  ](#compile_time_computing)
+-------------------------------------------------------------------------------
+
+If you have questions during the talk, feel free to interrupt any time.
+
+.I[
+You can download download the code covered in advance from here:
+https://github.com/tbfe-de/FPGA-Kongress_2019
+]
+
+---
+template: plain
+name: case_studies_overview
+header: ## Three Short Case Studies
+eta: 11:21
+
+There are people telling you:
+
+.N.center[
+If you start with C++, you need to do everything different.  
+Otherwise you'll never exploit the advantages of OOP.._[]
+]
+
+.F[:
+Note that C++ is much more than "just another OOP-Language". Especially its
+template feature – which at the advanced edge leads to Metaprogramming – is
+[Metaprogramming]: https://en.wikipedia.org/wiki/Generic_programming
+relatively unique among other language, which at first, cursory glance may look
+similar.
+]
+
+.center.large[
+!! NOT HERE !!
+]
+
+If you can compile your code with C++ (can you?)
+
+* you can very well profit from "small things" …
+
+* … slowly grow into a language with so many advantages over C …
+
+* … that you soon will fight tooth and nails to keep using it.
+
+---
+template: plain
+header: ### WHAT we will do here
+eta: 11:22
+
+This presentation
+
+* walks you through three little example
+
+* meant to show how C++ would improve your C code
+
+  * without going "full OOP and
+
+  * without having to learn a lot._[]
+
+.F[:
+Well, I lied: how much you have to learn depends on how much you want to
+optimize the resulting code – optimize *beyond* what C allows you to do.
+]
+
+---
+template: plain
+header: ### HOW we will do it
+eta: 11:23
+
+The following Code Walks are
+
+* are partially based on prepared material
+
+* which is then in live-demos modified for improvements._[]
+
+.F[:
+From some feedback of the trainings I teach I know this can help to slow down
+the presentation: typing in code may seem like a waste of time but actually it
+allows the participants understand the big picture before going into the
+specifics (compared to throwing 20 lines of code or so onto the screen, you
+yourself know very well, and immediately start talking about the code in line
+11, 12 and 17 to highlight a particular technique that code is meant to
+communicate).
+]
+
+.N.center[
+So you have a chance to step in and control progress AND direction.  
+]
+
+.center.large[
+!! USE THAT CHANCE !!
+]
+
+---
+template: plain
+name: strong_arithmetic_types
+header: ## Strong Arithmetic Types
+eta: 11:25
+
+.pull-left[
+Doesn't this fragment look nice?
+
+```
+typedef float Current; // mA
+typedef float Voltage; // V
+typedef float Power;   // W
+…
+Current get_I();
+Current get_U();
+void show_VA(Power);
+…
+const Voltage minVcc = 4.85,
+              maxVcc = 5.2;
+…
+Current c = get_I();
+Voltage v = get_U();
+…
+show_VA(v * c/1e3);
+```
+]
+.pull-right[
+What may be the intent?
+
+* Allow to change the data type at a central place – e.g. from `float` to
+  `double`?
+
+* Protect against easy errors?
+```
+if (get_I() < minVcc) …
+```
+
+* Maybe even with units checking?
+
+```
+show_VA(get_U() % get_I());
+```
+]
+
+---
+template: plain
+header: ### First Live Demo Starts
+eta: 11:28
+
+.center.large[
+SO LET'S SEE
+]
+
+.N.center[
+`step0.cpp` – motivating type safety …
+]
+
+* `typedef`-types are just aliases – *not strong types*
+
+* same for type definitions in the new C++ `using` syntax
+
+.center.large[
+OK, so it was a bad idee.
+]
+
+---
+template: plain
+header: #### Trying a Different Approach
+eta: 11:31
+
+.N.center[
+`step1.cpp` – a very first PoC (proof of concept)
+]
+
+* `struct`-s._[] are real types …
+
+.F[:
+And of course `class`-es are, because in C++ the only difference between
+`struct` and `class` is that the former by default starts with `public`
+and the latter starts with `private`.
+]
+
+.N.center[
+`step2.cpp` – minimally fleshing it out
+]
+
+* Looks like type-checking works as expected :-)
+
+* But how avoid developing the habit to "throw in" just enough
+  `.get()`-s to silence compiler error messages?
+
+.center.large[
+C++ allows it!
+]
+
+---
+template: plain
+header: #### Looks Promising So Far
+eta: 11:33
+
+.N.center[
+`step3.cpp` – blowing up the strong type PoC.
+]
+
+* Actually it is possible to write your code like this …
+
+```
+int main() {
+	Voltage u1 = 5.0_V;
+	Current i1 = 20_mA;
+	Power p1 = u1 * i1;
+	std::cout << p1.get_mW() << " mW" << std::endl;
+}
+```
+
+* … at least when a due amount of evidence is invested.._[]
+
+.F[:
+In this example a lot of code is commented out. The reason is to suggest you
+shouldn't actually write code that goes untested … and therefore **only the
+minimum to make the code compile** is implemented. The comments are meant to
+show what should probably added if these strong types are made available in a
+library.
+]
+
+---
+template: plain
+header: #### Reducing Focus For a Moment
+eta: 11:36
+
+.N.center[
+`step4.cpp` – A "more fully blown" example for `Voltage` class
+]
+
+* Obviously there is a lot of code required …
+
+* … but it's rather systematic.
+
+.center.large[
+So how make it more DRY?._[]
+]
+
+.F[:
+DRY is an acronym often used to refer to the *Don't Repeat Yourself" principle
+which means you should strive for avoiding large parts of duplicate code.
+]
+
+Two solutions come to mind:
+
+* Re-structure and shift common parts into a template or base class.
+
+* Generate systematic code from a simplified description.
+
+---
+template: plain
+header: #### Getting Serious About It
+eta: 11:41
+
+.N.center[
+`step5.cpp` – a templated base class.._[]
+]
+
+.F[:
+An alternative approach using the C-preprocessor as code generator is beyond
+the scope of this short talk. It could also be here to reduce the systematic
+code sequences.
+]
+
+Before looking at the details understand that most developers
+
+* need no delve into the details of the implementation details
+
+* but just can profit from the strong types like that:
+
+.pull-left[
+```
+…
+158:	int main() {
+159:		Voltage v = 20_mA;
+160:	}
+```
+]
+.pull-right[
+```
+step5.cpp:159:14:  
+  error: conversion from
+  ´Current´ to  non-scalar type
+  ´Voltage´ requested
+```
+]
+
+---
+template: plain
+header: #### Where To Go from here?
+eta: 11:44
+
+.I[
+Full code see **`Example1`** in    
+https://github.com/tbfe-de/FPGA-Kongress_2019
+]
+
+.center.large[
+Just whetted your appetite?
+]
+
+* Don't underestimate the effort required to extend it to all the physical
+  units your program requires!
+
+* Maybe [Boost.Units] makes sense for you.._[]
+
+[Boost.Units]: https://www.boost.org/doc/libs/release/doc/html/boost_units.html
+
+.F[:
+Copied from its description:  
+*The Boost.Units library is a C++ implementation of dimensional analysis in a
+general and extensible manner, treating it as a generic compile-time
+metaprogramming problem. With appropriate compiler optimization, no runtime
+execution cost is introduced, facilitating the use of this library to provide
+dimension checking in performance-critical code. Support for units and
+quantities (defined as a unit and associated value) for arbitrary unit system
+models and arbitrary value types is provided, as is a fine-grained general
+facility for unit conversions. Complete SI and CGS unit systems are provided,
+along with systems for angles measured in degrees, radians, gradians, and
+revolutions and systems for temperatures measured in Kelvin, degrees Celsius
+and degrees Fahrenheit. The library architecture has been designed with
+flexibility and extensibility in mind; demonstrations of the ease of adding
+new units and unit conversions are provided in the examples.*
+]
+
+---
+template: plain
+name: two_faces_of_templates
+header: ## The Two Faces of Templates
+eta: 11:45
+
+Assume we have just completed a nice piece of code, implementing a little
+event queue …._[]
+
+```
+class EventQueue {
+	static const std::size_t QueueSize = 10+1;
+	Event data[QueueSize];
+	size_t iput = 0, iget = 0;
+	static std::size_t wrap(std::size_t idx) {
+		return idx % QueueSize;
+	}
+public:
+	bool empty() const;
+	bool full() const;
+	std::size_t size() const;
+	void put(Event);
+	void get(Event&);
+	Event peek(std::size_t = 0) const;
+};
+```
+
+.F[:
+Payload `Event` not further detailed (maybe assume an enumeration type).
+]
+
+---
+template: plain
+header: ### Second Live Demo Starts
+eta: 11:47
+
+.center.large[
+Where to go from here?
+]
+
+Outline of demo – maybe varied or extended on request:
+
+* Explain the code, especially "full" and "empty" conditions.
+* Explain its current limitations.
+
+.N.center[
+`step1.cpp` – generalize into a `RingBuffer` template.
+]
+
+Parametrize
+
+* payload via a template `typename` argument and
+
+* maximum queue size via a template `std::size_t` argument.
+
+---
+template: plain
+header: #### Intermezzo: Now That Was the Easy Part
+eta: 11:50
+
+Let's see what we've got so and how it changes the usage:
+```
+template<typename Payload, std::size_t Size>
+class RingBuffer {
+	Payload data[Size+1];
+	std::size_t iput = 0, iget = 0;
+	static std::size_t wrap(std::size_t idx) {
+		return idx % (Size+1);
+	}
+public:
+	bool empty() const;
+	bool full() const;
+	std::size_t size() const;
+	void put(const PayLoad&);
+	void get(PayLoad&);
+	PayLoad peek(std::size_t = 0) const;
+};
+```
+
+.pull-left[
+Usage once was:
+```
+EventQueue q;
+```
+]
+.pull-right[
+And now it is:
+```
+RingBuffer<Event, 10> q:
+```
+]
+
+---
+template: plain
+header: #### Summarizing So Far
+eta: 11:54
+
+[Generic Programming]: https://en.wikipedia.org/wiki/Generic_programming
+
+.center.large[
+Wasn't that easy-peasy?
+]
+
+For most everybody usage is nearly as easy as before!._[]
+
+.N.center[
+That's the tiny little bit what **many** developers need to know when C++
+templates are utilized for what is also called [Generic Programming].
+]
+
+.F[:
+And you can get it even closer with this type alias:
+```
+using EventQueue = RingBuffer<Event, 10>;
+```
+]
+
+And turning a type and a compile-time constant into template arguments wasn't
+that difficult either, or was it?
+
+.N.center[
+That's the additional knowledge to be acquired.  
+But only **few** developers need to have it.
+]
+
+So why is it C++ templates have the reputation to be hard to master?
+
+---
+template: plain
+header: #### Second Live Demo Continues
+eta: 11:58
+
+[Metaprogramming]: https://en.wikipedia.org/wiki/Generic_programming
+
+C++ templates **may** become a bit or even much more complicated
+
+* once you want or need to optimize based on type properties,
+* what is also called [Metaprogramming].
+
+.N.center[
+But that again is knowledge **only some few** need to have!
+]
+
+(Well … except maybe for the ability to interpret error messages.._[])
+
+.F[:
+Yes! It was a bit of a white lie to get you started. Actually deciphering error
+messages from bad use of templates may need special skills at times. But then
+there comes C++20 with its promise a new feature called [Constraints] will
+improve the current situation substantially.
+]
+
+.N.center[
+`step2.cpp` – a closer look to argument handling
+]
+
+If time allows and there is sufficient interest it may be discussed 
+
+* why the argument to `put` was turned into `const Payload&` and
+
+* how this could be optimized using with [Metaprogramming].
+
+[Metaprogramming]: https://en.wikipedia.org/wiki/Generic_programming
+
+---
+template: plain
+header: #### Optional Further Extensions
+eta: 12:03
+
+Discuss generalizing handling of the "full" and "empty" case:._[]
+
+.F[:
+For an even more advance extension consider how "thread-safe" variants of the
+`RingBuffer` could be provided via derived classes or "policy"-style template
+argument.
+]
+
+* ignore situation
+  * overwriting elements on `put`
+  * returning default on `get`
+
+<!-- -->
+
+* ignore situation, returning
+  * `false` on `put` when `full` (otherwise `true`)
+  * `false` on `get` when `empty` (otherwise `true`)
+
+<!-- -->
+
+* throw exception
+  * on calling `put` when `full`
+  * on calling `get` when `empty`
+
+<!-- -->
+
+.I[
+Full code see **`Example2`** in    
+https://github.com/tbfe-de/FPGA-Kongress_2019
+]
+
+---
+template: plain
+name: compile_time_computing
+header: ## Computing at Compile Time
+eta: 12:10
+
+C++11 has added `constexpr` to indicate
+
+* a data initialization is to be done at compile time, meaning
+
+  * an expression used as initial value needs no run-time code;
+
+* a function is to be made available also._[] at compile-time, meaning
+
+  * there are certain restrictions on what it is allowed to do.
+
+.F[:
+A run-time version of a `constexpr` function is made available too when there
+are arguments that themselves are not `constexpr` data; of course such a
+function can then *not* be used to initialize `constexpr` data.
+]
+
+.N.center[
+Beyond that semantics are straight forward and exactly like expected.
+]
+
+You may
+
+* call `constexpr` functions in expression initializing `constexpr` data;
+* use `constexpr` data as argument for `constexpr` function calls.
+
+---
+template: plain
+name: compile_time_computing
+header: ### A Close To Trivial Example
+eta: 12:11
+
+Here is an example (requiring C++14._[] at least):
+```
+constexpr int countBits(std::uint16_t v) {
+	int bits = 0;
+	for (; v; v >>= 1) bits += (v & 0x1);
+	return bits;
+}
+```
+
+To verify the function call takes place at compile-time you may …
+.pull-left[
+… either use that function to initialize `constexpr` data …
+
+```
+constexpr int n = bitCount(42);
+```
+]
+.pull-right[
+… or in any other context which requires a compile-time constant:
+
+```
+char s[bitCount(42)];
+```
+]
+
+.F[:
+A C++11 version would have to look like this as such a function is limited to
+a `return` statement only:
+```
+constexpr int countBits(std::uint16_t v) {
+	return v ? ((v & 0x1) + countBits(v >> 1) : 0;
+}
+```
+]
+
+---
+template: plain
+name: compile_time_computing
+header: ### Picking Up From There
+eta: 12:13
+
+.N.center.large[
+Now that's … just boring!
+]
+
+So lets go for something more involved:
+
+* At some point a program needs to call the sine function.
+
+* It is determined such function calls are a performance bottle-neck.
+
+* The arguments come only from a limited range (radians or degrees).
+
+* There is no ultimate precision necessary, instead
+  * a pre-calculated table with a fixed set of values should be used,
+  * and intermediate values determined by linear interpolation.
+
+.N.center.large[
+Sounds ambitious enough?
+]
+
+---
+template: plain
+header: ### Third Live Demo Starts
+eta: 12:14
+
+Outline of demo – maybe varied or extended on request:
+
+* Starting with a proof of concept
+* Evaluating performance and …
+* … deviation from accurate value.._[]
+
+.F[:
+In case you are only reading this you may be interested in the result. It looks
+like this:
+```
+step0.cpp
+**************** TESTCASE 1 ****************
+0 to 90 degree lookup-table with 19 entries
+--------------------------------------------
+quicksine: 42137 usec for 1000000 calls
+         = 0.042137 usec per call
+std::sin : 134871 usec for 1000000 calls
+         = 0.134871 usec per call
+deviation: 2000 random data points
+     425 = exact results (21.25%)
+       0 = within 0.01 percent (0%)
+       0 = within 0.02 percent (0%)
+      20 = within 0.05 percent (1%)
+    1515 = within 0.1 percent (75.75%)
+      40 = within 0.25 percent (2%)
+       0 = within 0.5 percent (0%)
+       0 = within 1 percent (0%)
+       0 = within 2 percent (0%)
+       0 = worse results (0%)
+```
+]
+
+---
+template: plain
+header: #### Everything Cool So Far?
+eta: 12:16
+
+* Then fasten your seat belts and …
+* … let's push the pedal to the metal!._[]
+
+.N.center[
+`step1.cpp` – pull things belonging together in `class QuickSine`.
+]
+
+Modifications are systematic, some decisions to be made include:
+
+* Where to put common helper functions?
+* Continue to support white-box testing?
+
+.N.center[
+`step2.cpp` – finally achieved to make the constructor `constexpr`
+]
+
+Here `std::array` introduced in `step0.cpp` (because of its index-checking
+feature) had to be replaced with a native array.
+
+* This is because prior to C++17 neither `std::array::operator[]` nor
+  `std::operator::at` are `constexpr`.
+
+---
+template: plain
+header: #### The Problems Of an Autodidact
+eta: 12:19
+
+.N.center[
+Surely, since the beginning of our *Internet Times* much has changed.
+]
+
+E.g. how much do
+
+* we still need to know in adavance compared
+* to what can we just look up when needed?
+
+The problem comes when something doesn't work and compiler error messages aren't
+particularly hepful (which is not that rare in C++).
+
+Sometimes it is very hard to decide:
+
+* Is it I', still on the right track and just missing a small point?
+* Or should I back-out substantuially and try a different approach?
+
+.center.large[
+This has often hit me too!._[]
+]
+
+.F[:
+And it is just one reason why you should allow some time to try out ideas with
+what I call "proof of concept" approaches, like the one shown in this short
+series.
+]
+
+---
+template: plain
+header: #### Lessons Learned (Personally)
+eta: 12:25
+
+Here is a list of the major stumble stones that hit me during this little
+"Proof of Concept" series.
+
+* C++11 does not require any of the `cmath`-functions to be `constexpr`
+
+  * Actually it **IS** the case for `g++` but **not** for `clang++`.._[]
+
+.F[:
+If your compile time computations require library functions that aren't
+`constexpr` you need to find an open source implementation (in this case of
+the trig-function) which only builds on basic math, like e.g. approximating
+the sine from the [Taylor Series].  
+While I'm at it: Wikipedia has a nice article about computing square roots
+exploiting some specific properties of the IEEE floating point format:
+https://en.wikipedia.org/wiki/Fast_inverse_square_root
+]
+
+[Taylor Series]: https://en.wikipedia.org/wiki/Taylor_series
+
+* Neither `array::operator[]` nor `array::at` are `constexpr` in C++14.
+
+  * This made it necessary to switch back to a native array.
+
+* For some reason you need to add an initializer for the look-up table.
+
+  * Despite the actuall initialization follows later in a loop.
+
+---
+template: plain
+header: #### And the Winner is …?
+eta: 12:29
+
+.N.center[
+`step3.cpp` – going for the victory lap.
+]
+
+More cleanup to make the class a candidate for production use.._[]
+
+* Still it is a single file solution …
+* … but comments already indicate what is intended to go where.
+
+.F[:
+So far it has been nothing but refactoring as the behavior is still the same:
+```
+step3.cpp
+**************** TESTCASE 1 ****************
+0 to 90 degree lookup-table with 19 entries
+--------------------------------------------
+quicksine: 53284.1 usec for 1000000 calls
+         = 0.0532841 usec per call
+std::sin : 134429 usec for 1000000 calls
+         = 0.134429 usec per call
+deviation: 2000 random data points
+     425 = exact results (21.25%)
+       0 = within 0.01 percent (0%)
+       0 = within 0.02 percent (0%)
+      20 = within 0.05 percent (1%)
+    1515 = within 0.1 percent (75.75%)
+      40 = within 0.25 percent (2%)
+       0 = within 0.5 percent (0%)
+       0 = within 1 percent (0%)
+       0 = within 2 percent (0%)
+       0 = worse results (0%)
+```
+]
+
+
+---
+template: plain
+header: #### Summarizing Again
+eta: 12:32
+
+Again think of:
+.N.center.large[
+From the Many To the Few!
+]
+
+The "many" are those who now use `quicksine` just like this:._[]
+```
+QuickSine<double, 0, 180, 19> quicksine;
+…
+auto x = quicksine(123);
+```
+
+.F[:
+Or maybe with a type alias:
+```
+using MyQuickSine = QuickSine<double, 0, 180, 19>;
+```
+]
+
+The "few" are those having written the code just walked through.
+
+.I[
+Full code see **`Example3`** in    
+https://github.com/tbfe-de/FPGA-Kongress_2019
+]
+
+---
+template: plain
+name: closing_note
+header: ## Closing Note
+eta: 12:35
+
+Feel free to contact me via **`mw@tbfe.de`** if you have any questions on
+
+* *C++*._[] – no matter whether you are interested in using it
+
+  * as *"Better C"* only (= Zero-Overhead C++),
+  * as *"Classic C++"* (= C++98 Style), or
+  * as *"Modern C++"* (= C++11/14/17/20)
+
+.F[:
+Did you know: You can also mix C++ with Tcl Scripting, e.g. to improve
+time-critical parts of some software initially implemented in Tcl, which
+makes a nice and easy way of *"Rapid Prototyping"* …
+]
+
+* the *Tcl Programming Language* and/or its *Standard Library*
+
+* including Tk, the *Tcl Extension for GUI-Programming*
+
+.N.center[
+***Thank You for Attending to (or Reading) this Presentation.***
+]
+
+</textarea>
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- ::::::::::::::::::::: )-: ereh TNETNOCLAER fo dne :::::::::::::::::::: -->
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+    <script src="remark.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightLanguage: 'c'
+      , highlightStyle: 'docco'
+      , countIncrementalSlides: false
+      });
+    </script>
+  </body>
+</html>

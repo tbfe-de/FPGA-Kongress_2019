@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The XILINX Tcl Store</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- when changing the stylesheet file please see also remark below -->
+    <link rel="stylesheet" type="text/css" href="styling.css" />
+  </head>
+  <body>
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- :::::::::: template pages come first ... skip to REALCONTENT ::::::::: -->
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<textarea id="source">
+
+layout: true
+name: blank
+styling: styling.css
+styling-by: Martin Weitzel
+
+<!--
+  *****************************************************************************
+  Template used for title page (only)
+  *****************************************************************************
+  Please change the 'styling-by:' attribute if you change the style-sheet.
+-->
+
+.stylehint[
+Styled with [{{styling}}]({{styling}}) by {{styling-by}}
+]
+
+---
+layout: true
+name: plain
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](http://tbfe.de) &#8199;&#8199; 2019-05-23 (11:00 - 11:45)
+customer:  [ELEKTRONIK PRAXIS & PLC2](http://www.fpga-kongress.de/de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages NOT referring to any Info-Graphic
+  *****************************************************************************
+  The following attributes are mandatory FOR THE TEMPLATE PAGE and should
+  simply be left empty if not meaningful.
+
+  copyright: will be reproduced in each page footer first
+  branding: will reproduced in each page footer next
+  customer: will be reproduced in each page footer last
+
+  As the above attributes are part of several page templates a global replace
+  should be used for consistent changes.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+.eta[ETA: {{eta}}]
+
+{{header}}
+
+.pagefooter[
+{{copyright}}: {{branding}} .fpga-logo[{{customer}}]
+]
+
+---
+layout: true
+name: linkinfo
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](http://tbfe.de) &#8199;&#8199; 2019-05-23 (11:00 - 11:45)
+customer:  [ELEKTRONIK PRAXIS & PLC2](http://www.fpga-kongress.de/de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages INTRODUCING to a new Info-Graphic
+  *****************************************************************************
+  On this kind of pages a size-reduced version of the whole info graphic will
+  be reproduced and occupies approximately 2/3 of the page width. So only add
+  little information, preferably links to later pages dealing with single
+  sections of the info graphic.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  graphic: file path to of the infographic EXCLUDING the suffix.
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+{{header}}
+
+.infographic[
+[![Info-Grafik](InfoGraphics/{{graphic}}.png)](InfoGraphics/{{graphic}}.png
+                "Click to open – add [CTRL+] SHIFT for new [tabbed] window")
+]
+
+.pagefooter[
+{{copyright}}: {{branding}} .fpga-logo[{{customer}} ]
+]
+
+---
+layout: true
+name: linkinfoA3
+copyright: (CC) BY-SA
+branding:  [Dipl.-Ing. Martin Weitzel](http://tbfe.de) &#8199;&#8199; 2019-05-23 (11:00 - 11:45)
+customer:  [ELEKTRONIK PRAXIS & PLC2](http://www.fpga-kongress.de/de)
+
+<!--
+  *****************************************************************************
+  Template used for for pages INTRODUCING to a new Info-Graphic
+  *****************************************************************************
+  On this kind of pages a size-reduced version of the whole info graphic will
+  be reproduced and occupies approximately 2/3 of the page width. So only add
+  little information, preferably links to later pages dealing with single
+  sections of the info graphic.
+
+  On pages USING THIS TEMPLATE the following attributes must be set:
+
+  graphic: file path to of the infographic EXCLUDING the suffix.
+  header: ## and header text (i.e. including the markdown formatting indicator)
+
+-->
+
+{{header}}
+
+.infographicA3[
+[![Info-Grafik](InfoGraphics/{{graphic}}.png)](InfoGraphics/{{graphic}}.png
+                "Click to open – add [CTRL+] SHIFT for new [tabbed] window")
+]
+
+.pagefooter[
+{{copyright}}: {{branding}} .fpga-logo[{{customer}} ]
+]
+
+---
+layout: false
+template: blank
+name: frontmatter
+
+.title[
+	Vivado's Architecture for Tcl-Extensions  
+	The XILINX TCL Store
+]
+
+.subtitle[
+	From General Options and Techniques  
+	to  
+	Understanding a Complex Framework
+]
+.author.pull-left[
+	Durchführung  
+	Dipl.-Ing. Martin Weitzel  
+	Technische Beratung für EDV  
+	http://tbfe.de  
+
+]
+.client.pull-right[
+	FPGA-Kongress 2019, München  
+	2019-05-21 to 2019-05-23  
+	ELEKTRONIK PRAXIS &  
+	PLC2 Schulungscenter
+]
+
+.F[:
+You may download this presentation from the
+[Author's Internet Site](http://tbfe.de/archive)
+for any use in compliance with the
+[Creative Commons BY-SA License](http://creativecommons.org/licenses/by-sa/2.0/).
+As it has been created using the free HTML4-Tool [Remark](http://remarkjs.com),
+its content is written using the
+[Markdown-Syntax](http://daringfireball.net/projects/markdown/syntax),
+so you may even enhance the purely electronic (non-printed) form with your own
+annotations, only by means of any ordinary text editor. Just hit the P-key while
+viewing this in an internet browser, and follow instructions.
+]
+
+???
+
+(use +/- above to adjust the font size for convenient reading)
+
+Remark allows to add presenter notes to each page. As that feature is **not**
+used by the author of that presentation, it is available for private annotations
+from [this page](#content) on.
+
+Assuming you have downloaded and stored this presentation as HTML-file, proceed
+as follows:
+
+* Open the file in a text editor of your choice.
+
+* Locate the page which you want to annotate.
+
+  * You may do so by just scrolling down (but often it is easier to)
+  * use the text search feature of your editor.
+
+* Locate the separator to the next page (i.e. `---` in a line of its own).
+
+* Before that add another line with three question marks (`???`) only.
+
+Between these to separator lines you can put your annotations and view these
+by using as you just view this page.
+
+**Hint:**
+Indent code examples with four spaces at the beginning of each line and they
+will be displayed with their original line breaks. As an example, below the
+page structure including annotations is shown:
+
+    template: plain
+    name: used_for_internal_links
+    header: ## Shown at the Top of the Page
+
+    Simply scroll down through this document loaded in an editor and you will
+    probably catch the basics of Markdown-Syntax easily, e.g.  how to put in
+    *slight* or **strong** emphasis or [add a link](http://tbfe.de/downloads).
+
+    ???
+    From here follow the [Presenter Notes], i.e. your private annotations
+    ...
+    ...
+
+    [Presenter Notes]: adding-longer-links-that-keeps-text--uncluttered
+
+    ...
+    up to here.
+    ---
+
+To return to the normal view, now press the P-key once more.
+
+<!--
+If you want to put in meta-annotations, i.e. text that is not even shown
+after pressing the P-key, simply use HTML comments, like it is done here.
+-->
+
+---
+template: plain
+class: agenda
+name: content
+header: ## Agenda
+eta: 11:20
+
+* [Tcl Command Input			](#tcl_command_input)
+
+* [Sourcing Commands			](#sourcing_commands)
+
+* [Defining `proc`-s			](#defining_procs)
+
+* [Manual and Autoloading		](#manual_and_autoloading)
+
+* [The `unknown` procedure		](#the_unknown_procedure)
+
+* [Quick Introduction to Git		](#quick_intro_to_git)
+
+* [Tcl-Store File Organization	](#tcl_store_file_org)
+
+---
+template: plain
+name: tcl_command_input
+header: ## Tcl Command Input
+eta: 11:21
+
+This is how you basically work if you don't access Vivado via the GUI but
+through the (Tcl-) command line:
+
+* Type a command …
+  * … to the Tcl console._[] (bottom of GUI screen) or
+  * … in `-tcl` mode in a "terminal emulator" (Linux)
+  * … or a (DOS) "command box" (Windows)
+
+.F[:
+You can switch back and forth between GUI mode (with the Tcl console) to a
+"terminal emlator" or "command box" any time issuing the (Tcl) commands
+`stopgui` and `startgui`.
+]
+
+<!-- -->
+
+* View the reaction …
+  * … as text response (on Tcl console, terminal emulator or command box)
+  * … on the GUI window (depending on the command there may or may not be one)
+
+<!-- -->
+
+* Repeat as long as necessary
+
+---
+template: plain
+name: sourcing_commands
+header: ## Sourcing Commands
+eta: 11:22
+
+You can prepare a sequence of Tcl commands in a (text) file also called a
+*Tcl script* or *command script*:
+
+* Run these commands
+  * either as complete activity._[] in `-batch` mode
+  * or via the `source` command with the name of the file as argument
+
+.F[:
+Of course you can also switch to GUI mode with the command `startgui` during
+"scripting".
+]
+
+.N.center[
+As an extension over the standard behavior Vivado's `source` command shows all
+lines read from the script file on the screen as Tcl comments.
+]
+
+---
+template: plain
+name: defining_procs
+header: ## Defining `proc`-s
+eta: 11:23
+
+When you want even more automation in scripting by using flow control logic._[]
+you best bundle the actions into a subroutine or "Tcl `proc`":
+
+During developing and debugging the (control flow) logic the following approach
+makes sense:
+
+* Keep the script file open in a text editor and
+  * modify its content as necessary
+  * save it back to the file
+
+<!-- -->
+
+* from the Tcl console `source` the script file
+
+<!-- -->
+
+* run the subroutine …
+  * simply by using its name like a command
+  * adding appropriate arguments
+
+<!-- -->
+
+* as necessary repeat
+  * from previous step varying the arguments or
+  * from first step when the (control flow) logic changes
+
+---
+template: plain
+name: manual_and_autoloading
+header: ## Manual and Autoloading
+eta: 11:24
+
+If you are finally happy with what your subroutines with Tcl commands do
+
+* you may `source` the definitions from one of the `init` files.
+
+* or automate that via autoloading and packages
+  * to `source`-ing the right file (with the `proc` definition) whenever an
+    unknown command is encountered
+  * providing a mechanism for versioning and selection on version numbers
+  * including to provide non-Tcl extensions implemented as compiled C or C++
+    programs.
+
+<!-- -->
+
+.N.center[
+Details on `autoload` and `package`-s will not be covered further here.._[]
+]
+
+.F[:
+As this talk is mainly focussed on the XILINX Tcl store demonstrating details
+on autoloading make not so much sense. What is important is just to understand
+that Tcl has features triggered by unknown commands that are typically utilized
+to build and "infra structure" for user-loadable extensions.
+]
+
+---
+template: plain
+name: the_unknown_procedure
+header: ## The `unknown` Procedure
+eta: 11:25
+
+As already mentioned this procedure is tailored to automatically add
+sub-routines via the `source` command.
+
+.N.center[
+Listing what it does is done with: `info body unknown`
+]
+
+The actual output._[] is not shown here …
+
+* … because it is lengthy and
+
+* … to avoid copyright issues.
+
+.F[:
+Still feel encouraged to look at it in both, a standard Tcl shell and the Tcl
+interpreter integrated vivado Vivado.
+Actually doing –  if only to satisfy curiosity – may be revealing!  
+**In `tclsh` or `wish`** the body is rather lengthy but what it basically does
+is completing commands entered interactively in case they are unambiguously
+abbreviating a known command, eventually will auto-load `proc`-definitions, and
+– as last resort to make sense of interactive input – may execute an operating
+system command with the given name.  
+**In Vivado** the body looks simpler and provides a special feature: If a
+pattern inside square brackets looks like an index specification it is returned
+unchanged, i.e. **not** executed as command, probably leading to a
+_"command not found"_ error.
+]
+
+---
+template: plain
+name: quick_intro_to_git
+header: ## Quick Introduction to Git
+eta: 11:26
+
+Git is a distributed versioning system.
+
+* It does not use a central repository but replicates
+  * all versions
+  * everywhere.
+
+<!-- -->
+
+* The three most important activities are
+  * **initializing** a new or **cloning** an existing repository
+  * **adding** and **committing** changes to the code
+  * eventually **pushing** these to a back-up location.
+
+.N.center[
+Details may be shown on request in a live demo now …._[]
+]
+
+.F[:
+Or if all of you already know enough Git basics proceed to the next page.
+]
+
+---
+template: plain
+name: tcl_store_file_org
+header: ## Tcl Store File Organization
+eta: 11:29
+
+This makes the main part of that talk.
+
+.N.center[
+The structure will be explored and explained in a live demo now.
+]
+
+Finally, for completeness:
+
+* As an alternative 
+  * instead to running any extension via Tcl scripting as a command
+  * you may also connect t to the GUI.._[]
+
+.F[:
+Details see **Vivado Design Suite UG893** "Using The Vivado IDE":
+*Adding Custom Menu Commands*
+]
+
+<!-- -->
+
+* It has an advantage and a disadvantage:
+  * If you do most of your work via the GUI anyway, running extensions based on
+    Tcl-scripting may feel more "organic".
+  * It eliminates most chances for supplying additional information and getting
+    more control via (subroutine) arguments.
+
+<!-- -->
+
+---
+template: plain
+name: closing_note
+header: ## Closing Note
+eta: 11:44
+
+Feel free to contact me via **`mw@tbfe.de`** if you have any questions on
+
+* the *Tcl Programming Language* and/or its *Standard Library*
+
+* or Tk, the *Tcl Extension for GUI-Programming*
+
+* or *C++*._[] – no matter whether you are interested in using it
+
+  * as *"Better C"* only [= Zero-Overhead C++],
+  * as *"Classic C++"* [= C++98 Style], or
+  * as *"Modern C++"* [= C++11/14/17/20]
+
+.F[:
+Did you know: You can also mix C++ with Tcl Scripting, e.g. to improve
+time-critical parts of some software initially implemented in Tcl, which
+makes a nice and easy way of *"Rapid Prototyping"* …
+]
+
+.N.center[
+***Thank You for Attending to (or Reading) this Presentation.***
+]
+
+</textarea>
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+<!-- ::::::::::::::::::::: )-: ereh TNETNOCLAER fo dne :::::::::::::::::::: -->
+<!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
+    <script src="remark.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create({
+        highlightLanguage: 'tcl'
+      , highlightStyle: 'docco'
+      , countIncrementalSlides: false
+      });
+    </script>
+  </body>
+</html>
