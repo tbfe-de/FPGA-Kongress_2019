@@ -524,31 +524,230 @@ makes a nice and easy way of *"Rapid Prototyping"* …
 ---
 template: plain
 name: livedemo
-header: # Outline of Life Demo
-
---
+header: ## Outline of Life Demo
 
 * [An Initial a Example (more to come?)		](#initial_example)
 
---
+* [Cloning the TclStore From Github		](#cloning_tclstore)
 
-* [Cloning the TclStore from Xilinx' Web-Site	](#cloning_tclstore)
+* [Augmenting the Example For the Store		](#augmenting_example)
 
---
+* [Final Steps Before Uploading			](#before_uploading)
 
-* [Augmenting the Example for the Store		](#augmenting_example)
-
---
-
-* [Passing the Example through Lint]		](#linting_example)
+* [Uploading the Example To the Store		](#closing_note)
 
 --
 
-* [Uploading the Example to the Store		](#uploading_example)
+The above steps – as demonstrated now – will **not omit** some of the
+"stumble stones" that occurred to me while following the supplied
+documentation.
+.N.center[
+Though you should not blame XILINX!  
+As usual there documentation is very good and not getting something at first
+reading may well have been just my own little problem.._[]
+]
+
+.F[:
+Or in other words: I simply strive for being honest with you, so that you see
+others have similar problems you might have yourself when trying something new. 
+]
+
+---
+template: plain
+name: initial_example
+header: ### An Initial Example (more to come?)
+
+* Originally motivated by an participant of a training
+
+  * When creating a list of Design Objects you can tell Vivado to only put
+    in it objects having the minimum or maximum value of some property.
+
+  * What if you want to have the – say – three smallest or five largest?
+
+---
+template: plain
+header: #### `step0.tcl`
+
+* An algorithm was developed to keep that much elements in a list.
+
+  * As it is not simply a "one-liner" it was put into a file of its own right
+    from the beginning so that it can be edited outside the Tcl interpreter.
+
+<!-- -->
+
+* To try it out
+
+  * the variable `li` must be set,
+  * the algorithm executed via Tcl's `source` command
+  * the result "manually" by comparing `li` to the expectations
+
+<!-- -->
+
+---
+template: plain
+header: #### `step1.tcl`
+
+* The algorithm was turned into a subroutine `n_extremes`
+
+* Some decisions have to be made here about the parametrization.
+
+* Such decisions are arbitrary to some degree like in this case
+
+   * the "input" (list) is taken as argument `li`
+   * the elements to keep are specified by `n` with a default of `5`
+   * the "ouput" (list) is the return value
+
+<!-- -->
+
+.N[
+There is one more argument (`args`) which is intended to be used to specify
+how the extreme values are actually determined much in the same way as this
+is controlled for Tcl's [`lsort`] command.._[]
+]
+
+.F[:
+Currently this is not yet implemented. Like in `step0.tcl` the algorithm, now
+`n_extremes` only works on data types that can be compared via a "less than"
+operator (the same default `lsort` has if no arguments are specified).
+Of course to use `n_extremes` like described in the motivation something like
+`lsort`s `-command` option would need to be implemented. As this is a pure
+exercise in Tcl programming it is not included ere but will be added before
+that is pushed to the TclStore.
+]
 
 --
 
-* [Getting Famous … 				](#getting_famous)
+* It can now be tried interactively after `source`-ing that file *once* in a
+  Tcl interpreter.
+
+[`lsort`]: https://www.tcl.tk/man/tcl/TclCmd/lsort.htm
+
+---
+template: plain
+header: #### `step2.tcl`
+
+* The TclStore documentation **strongly suggests** to supply some minimal
+  test code,._[] verifying what you add to it actually works.
+
+.N[
+From the documentation it is not quite clear if this has to be put at a
+specific location in the file system. So for the moment it is kept inside the
+file that defines the subroutine.
+]
+
+--
+
+* Currently only very minimal testing is done.._[]
+
+.F[:
+The actual test input and the according expectations are supplied in a tabular
+style to a Tcl `foreach` loop, making it very easy to add more tests:
+```
+        …
+        foreach {    li     n  expected } {
+              # ----------- - -----------
+                {1 2 3 4 5} 5 {1 2 3 4 5}
+                {1 2 3 4 5} 3 {1 2 3}
+                {5 4 3 2 1} 3 {3 2 1}
+                {1 2 1 2}   2 {1 1}
+                {}          2 {}
+        } {
+                …
+        }
+```
+]
+
+---
+template: plain
+name: cloning_tclstore
+header: ### Cloning the TclStore From Github
+
+* Now it is time to get a local clone of XILINX' TclStore at Github
+
+  * https://github.com/Xilinx/XilinxTclStore
+
+<!-- -->
+
+--
+
+* Let's take some time to explore the directory structure now.
+
+--
+
+.N[
+To actually use that version of the TclStore now in Vivado you need to set two
+environment variables.
+]
+
+* Among other things this is very clearly documented in the Wiki-pages for
+  the TclStore:._[]
+
+  * https://github.com/Xilinx/XilinxTclStore/wiki/
+  * [(click here to go to the relevant wiki entry)](https://github.com/Xilinx/XilinxTclStore/wiki/Adding-a-New-App-to-the-Repository#let-vivado-know-where-your-cloned-tcl-repository-is-located)
+
+.F[:
+Probably time will not allow to do it as part of that short presentation but
+let me suggest in case you go through this once more at a later time that you
+also look in the Vivado GUI now what is offered as part of the TclStore an how
+it maps to the file system structure.
+]
+
+---
+template: plain
+name: augmenting_example
+header: ### Augmenting the Example For the Store
+
+* One of the minimal requirements if you want to contriubute something to the
+  TclStore is to document argument usage.
+
+  * [(click here to go to the relevant wiki entry)](https://github.com/Xilinx/XilinxTclStore/wiki/Adding-a-New-App-to-the-Repository#customize-the-app)
+  * but that we apply what is described in items 1 to 3 in reverse
+
+.N[
+Before we put everything at the location it should go to according to item 1
+from the description we give it a last testing.
+]
+
+--
+
+* For testing once more the file `step4.tcl` is used
+
+  * first `source`-ing into a Tcl interpreter, and
+  * if everthing looks good the tests are shut off
+
+--
+
+* Now we move it to its final destination
+
+---
+template: plain
+name: before_uploading
+header: ### Final Steps Before Uploading
+
+* What remains are some final, systematic steps:
+
+  * Run the code through some "liniting" tool
+  * Create some more files
+  * Check if everything is in place where it needs to be
+  * [(click here to go to the relevant wiki entry)](https://github.com/Xilinx/XilinxTclStore/wiki/Adding-a-New-App-to-the-Repository#running-the-linter)
+
+---
+template: plain
+name: uploading_example
+header: ### Uploading the Example To the Store
+
+.N.center[
+As there is still some work to do with respect to parsing the argments  
+– specifying what "extremes" to look for in the elements –  
+– so that `n_extremes` can be used as described in the motivation –  
+**this will not be done today.**
+]
+
+---
+template: plain
+name: getting_famous
+header: ### Getting Famous …
+
 
 </textarea>
 <!-- :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: -->
